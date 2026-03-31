@@ -19,12 +19,11 @@
   }
 
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
-  html { scroll-behavior: smooth; }
+  html, body { scroll-behavior: smooth; max-width: 100vw; overflow-x: hidden; position: relative; }
   body {
     background: var(--bg);
     color: var(--text);
     font-family: var(--font-body);
-    overflow-x: hidden;
     cursor: none;
     line-height: 1.4;
   }
@@ -159,7 +158,7 @@
       position: relative; z-index: 2; overflow: hidden;
   }
   .mh-wrap { display: flex; align-items: center; justify-content: center; gap: 3vw; flex-wrap: wrap; text-align: center; }
-  .mh-text { font-family: var(--font-head); font-size: clamp(36px, 12vw, 130px); font-weight: 800; text-transform: uppercase; line-height: 1; color: #000; letter-spacing: -0.04em; word-break: break-word; }
+  .mh-text { font-family: var(--font-head); font-size: clamp(28px, 10vw, 130px); font-weight: 800; text-transform: uppercase; line-height: 1; color: #000; letter-spacing: -0.04em; }
   .mh-text.highlight { background: var(--accent); padding: 0 30px; border-radius: 100px; transform: rotate(-2deg); display: inline-block; border: 3px solid #000; box-shadow: 6px 6px 0px #000; white-space: nowrap; }
   .mh-star { font-size: clamp(40px, 7vw, 90px); color: #000; animation: spin-slow 10s linear infinite; display: inline-block; line-height: 0.5; margin: 0 10px; }
   .mh-badge { margin-top: 50px; background: #000; color: var(--accent); padding: 12px 30px; border-radius: 100px; font-family: var(--font-head); font-weight: 800; font-size: 18px; text-transform: uppercase; letter-spacing: 0.1em; white-space: nowrap; }
@@ -171,7 +170,7 @@
   
   .module-info { width: 38%; padding: 80px 48px; border-right: 2px solid #000; display: flex; flex-direction: column; justify-content: center; }
   .module-num { font-family: var(--font-head); font-weight: 800; font-size: 16px; margin-bottom: 24px; color: #666; }
-  .module-title { font-size: clamp(28px, 4.5vw, 44px); font-weight: 800; line-height: 1.1; }
+  .module-title { font-size: clamp(24px, 6vw, 44px); font-weight: 800; line-height: 1.1; word-wrap: break-word; }
   .module-topics { flex: 1; padding: 80px 48px; display: flex; align-items: center; background: #fff; }
   
   /* STAGGERED LISTS */
@@ -192,7 +191,7 @@
   .spec-info { width: 38%; padding: 80px 48px; border-right: 2px solid rgba(255,255,255,0.2); display: flex; flex-direction: column; justify-content: center; transition: border-color 0.4s; }
   .spec-item:hover .spec-info { border-color: var(--accent); }
   .spec-num { font-family: var(--font-head); font-weight: 800; font-size: 16px; margin-bottom: 24px; color: #888; }
-  .spec-title { font-size: clamp(28px, 4.5vw, 44px); font-weight: 800; line-height: 1.1; color: var(--accent); }
+  .spec-title { font-size: clamp(24px, 6vw, 44px); font-weight: 800; line-height: 1.1; color: var(--accent); word-wrap: break-word; }
   .spec-topics { flex: 1; padding: 80px 48px; display: flex; align-items: center; }
   
   .spec-topic-list { list-style: none; display: flex; flex-direction: column; gap: 16px; }
@@ -246,7 +245,7 @@
     
     .modules-header { padding: 60px 20px; overflow: hidden; }
     .mh-wrap { gap: 16px; flex-direction: column; width: 100%; }
-    .mh-text { font-size: clamp(32px, 15vw, 50px); }
+    .mh-text { font-size: clamp(28px, 12vw, 50px); }
     .mh-text.highlight { padding: 5px 24px; border: 2px solid #000; box-shadow: 4px 4px 0px #000; margin-left: 2px; }
     .mh-badge { margin-top: 30px; padding: 10px 20px; font-size: 14px; letter-spacing: 0.05em; }
     
