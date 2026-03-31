@@ -148,9 +148,9 @@
   .banner span { color: var(--accent); }
 
   .duration { border-bottom: 2px solid #000; padding: 32px; display: flex; justify-content: center; align-items: center; gap: 40px; background: #fff; position: relative; z-index: 2;}
-  .duration-label { font-family: var(--font-head); font-weight: 800; font-size: 22px; color: #000; }
-  .duration-val { font-size: 22px; font-weight: 600; color: #444; }
-  .batch-tag { background: var(--accent); color: #000; padding: 6px 16px; border-radius: 6px; font-weight: 800; font-size: 14px; }
+  .duration-label { font-family: var(--font-head); font-weight: 800; font-size: clamp(16px, 4vw, 22px); color: #000; text-align: center; }
+  .duration-val { font-size: clamp(16px, 4vw, 22px); font-weight: 600; color: #444; text-align: center; }
+  .batch-tag { background: var(--accent); color: #000; padding: 6px 16px; border-radius: 6px; font-weight: 800; font-size: 14px; white-space: nowrap; }
 
   /* MODULE GRID HEADER */
   .modules-header { 
@@ -159,10 +159,10 @@
       position: relative; z-index: 2; overflow: hidden;
   }
   .mh-wrap { display: flex; align-items: center; justify-content: center; gap: 3vw; flex-wrap: wrap; text-align: center; }
-  .mh-text { font-family: var(--font-head); font-size: clamp(50px, 9vw, 130px); font-weight: 800; text-transform: uppercase; line-height: 1; color: #000; letter-spacing: -0.04em; }
-  .mh-text.highlight { background: var(--accent); padding: 0 40px; border-radius: 100px; transform: rotate(-2deg); display: inline-block; border: 3px solid #000; box-shadow: 6px 6px 0px #000; }
+  .mh-text { font-family: var(--font-head); font-size: clamp(36px, 12vw, 130px); font-weight: 800; text-transform: uppercase; line-height: 1; color: #000; letter-spacing: -0.04em; word-break: break-word; }
+  .mh-text.highlight { background: var(--accent); padding: 0 30px; border-radius: 100px; transform: rotate(-2deg); display: inline-block; border: 3px solid #000; box-shadow: 6px 6px 0px #000; white-space: nowrap; }
   .mh-star { font-size: clamp(40px, 7vw, 90px); color: #000; animation: spin-slow 10s linear infinite; display: inline-block; line-height: 0.5; margin: 0 10px; }
-  .mh-badge { margin-top: 50px; background: #000; color: var(--accent); padding: 12px 30px; border-radius: 100px; font-family: var(--font-head); font-weight: 800; font-size: 18px; text-transform: uppercase; letter-spacing: 0.1em; }
+  .mh-badge { margin-top: 50px; background: #000; color: var(--accent); padding: 12px 30px; border-radius: 100px; font-family: var(--font-head); font-weight: 800; font-size: 18px; text-transform: uppercase; letter-spacing: 0.1em; white-space: nowrap; }
   @keyframes spin-slow { 100% { transform: rotate(360deg); } }
 
   .module-list { display: flex; flex-direction: column; background: #f0f0f0; gap: 2px; border-bottom: 2px solid #000; }
@@ -244,10 +244,11 @@
     .banner { padding: 60px 24px; }
     .duration { flex-direction: column; gap: 16px; padding: 32px 20px; text-align: center; }
     
-    .modules-header { padding: 60px 20px; }
-    .mh-wrap { gap: 16px; flex-direction: column; }
-    .mh-text.highlight { padding: 5px 24px; border: 2px solid #000; box-shadow: 4px 4px 0px #000; }
-    .mh-badge { margin-top: 30px; }
+    .modules-header { padding: 60px 20px; overflow: hidden; }
+    .mh-wrap { gap: 16px; flex-direction: column; width: 100%; }
+    .mh-text { font-size: clamp(32px, 15vw, 50px); }
+    .mh-text.highlight { padding: 5px 24px; border: 2px solid #000; box-shadow: 4px 4px 0px #000; margin-left: 2px; }
+    .mh-badge { margin-top: 30px; padding: 10px 20px; font-size: 14px; letter-spacing: 0.05em; }
     
     .module-info { padding: 40px 24px 20px; border-bottom: 2px solid rgba(0,0,0,0.1); }
     .spec-info { padding: 40px 24px 20px; border-bottom: 2px solid rgba(255,255,255,0.1); }
