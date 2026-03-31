@@ -217,12 +217,24 @@
   .faq-acc-body { max-height: 0; overflow: hidden; transition: max-height 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
   .faq-acc-content { padding: 0 32px 32px; font-size: 18px; color: #222; line-height: 1.6; }
 
-  /* FOOTER */
-  .footer { background: var(--accent); padding: 140px 48px; text-align: center; position: relative; z-index: 2;}
-  .footer-big { font-size: clamp(50px, 18vw, 250px); font-weight: 800; line-height: 0.8; margin-bottom: 80px; }
-  .footer-link { display: inline-block; font-family: var(--font-head); font-size: 40px; font-weight: 800; color: #000; text-decoration: none; margin: 0 20px; border-bottom: 4px solid #000; transition: transform 0.3s; }
-  .footer-link:hover { transform: translateY(-5px); }
-  .footer-addr { font-size: 16px; font-weight: 700; text-transform: uppercase; margin-top: 60px; opacity: 0.8; }
+  /* FOOTER REDESIGN */
+  .footer { background: var(--accent); position: relative; z-index: 2; border-top: 4px solid #000; display: flex; flex-direction: column; }
+  .footer-top { padding: 120px 48px; display: flex; justify-content: space-between; align-items: flex-end; gap: 40px; border-bottom: 4px solid #000; background: #000; color: var(--accent); }
+  .footer-heading { font-size: clamp(50px, 12vw, 150px); line-height: 0.85; margin: 0; color: var(--accent); text-align: left; }
+  .footer-actions { display: flex; flex-direction: column; gap: 24px; min-width: 320px; }
+  
+  .brutal-btn { 
+    font-family: var(--font-head); font-weight: 800; font-size: 24px; text-transform: uppercase; 
+    padding: 24px 40px; text-decoration: none; display: inline-block; text-align: center;
+    border: 3px solid #000; box-shadow: 8px 8px 0px var(--accent); transition: all 0.2s ease;
+  }
+  .brutal-btn.primary { background: var(--accent); color: #000; box-shadow: 8px 8px 0px #fff; }
+  .brutal-btn.secondary { background: #fff; color: #000; border-color: #fff; box-shadow: 8px 8px 0px var(--accent); }
+  .brutal-btn:hover { transform: translate(4px, 4px); box-shadow: 4px 4px 0px rgba(255,255,255,0.5) !important; }
+  
+  .footer-bottom { padding: 40px 48px; display: flex; justify-content: space-between; align-items: center; background: var(--accent); color: #000; flex-wrap: wrap; gap: 24px; }
+  .footer-brand { display: flex; align-items: center; gap: 12px; }
+  .footer-addr { font-size: 16px; font-weight: 700; text-transform: uppercase; text-align: right; max-width: 400px; line-height: 1.5; margin: 0; }
 
   /* DISABLE CUSTOM CURSOR ON TOUCH DEVICES */
   @media (pointer: coarse) {
@@ -261,10 +273,13 @@
     .faq-pill { padding: 16px; width: 100%; box-sizing: border-box; font-size: 28px; }
     .faq-wrapper { padding: 60px 24px; }
     
-    .footer { padding: 80px 24px; }
-    .footer-contact { display: flex; flex-direction: column; gap: 20px; margin-top: 40px; }
-    .footer-link { font-size: 28px; border-bottom: 2px solid #000; margin: 0; }
-    .footer-big { margin-bottom: 40px; }
+    /* FOOTER MOBILE */
+    .footer-top { flex-direction: column; align-items: flex-start; padding: 80px 24px; gap: 60px; }
+    .footer-actions { width: 100%; min-width: unset; }
+    .brutal-btn { width: 100%; padding: 20px; font-size: 20px; box-sizing: border-box; box-shadow: 6px 6px 0px var(--accent); }
+    .brutal-btn.primary { box-shadow: 6px 6px 0px #fff; }
+    .footer-bottom { flex-direction: column; align-items: flex-start; padding: 40px 24px; }
+    .footer-addr { text-align: left; }
   }
 
   /* Reveal animation */
@@ -568,14 +583,21 @@
 </section>
 
 <div class="footer" id="enroll">
-  <div class="magnetic-wrap reveal">
-    <div class="magnetic-elem footer-big">JOIN</div>
+  <div class="footer-top">
+    <h2 class="footer-heading reveal">START<br>YOUR<br>JOURNEY</h2>
+    <div class="footer-actions reveal">
+      <a href="tel:+919083596000" class="brutal-btn primary">CALL +91 90835-96000</a>
+      <a href="https://braandschool.com" class="brutal-btn secondary">VISIT WEBSITE</a>
+    </div>
   </div>
-  <div class="footer-contact reveal">
-    <a href="tel:+919083596000" class="footer-link">+91 90835-96000</a>
-    <a href="https://braandschool.com" class="footer-link">braandschool.com</a>
+  
+  <div class="footer-bottom">
+    <div class="footer-brand">
+       <span class="nav-logo-box" style="background: #000; color: var(--accent);">Bs</span>
+       <span class="nav-logo-text">BraandSchool</span>
+    </div>
+    <p class="footer-addr">2nd Floor, Pradhan Building, Rishi Aurobindo Rd<br>Hakim Para, Siliguri</p>
   </div>
-  <p class="footer-addr">2nd Floor, Pradhan Building, Rishi Aurobindo Rd, Hakim Para, Siliguri</p>
 </div>
 
 <script>
