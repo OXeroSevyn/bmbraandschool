@@ -181,7 +181,7 @@
 
   /* SPEC */
   .spec { background: #000; color: #fff; padding: 120px 48px; text-align: center; border-bottom: 2px solid #000; border-top: 2px solid #000; position: relative; z-index: 2;}
-  .spec h2 { font-size: clamp(32px, 8vw, 100px); margin-bottom: 80px; }
+  .spec h2 { font-size: clamp(24px, 7vw, 100px); margin-bottom: 80px; word-wrap: break-word; }
   .spec span { color: var(--accent); }
 
   /* SPEC MODULES */
@@ -220,7 +220,7 @@
   /* FOOTER REDESIGN */
   .footer { background: var(--accent); position: relative; z-index: 2; border-top: 4px solid #000; display: flex; flex-direction: column; }
   .footer-top { padding: 120px 48px; display: flex; justify-content: space-between; align-items: flex-end; gap: 40px; border-bottom: 4px solid #000; background: #000; color: var(--accent); }
-  .footer-heading { font-size: clamp(50px, 12vw, 150px); line-height: 0.85; margin: 0; color: var(--accent); text-align: left; }
+  .footer-heading { font-size: clamp(32px, 10vw, 150px); line-height: 0.85; margin: 0; color: var(--accent); text-align: left; }
   .footer-actions { display: flex; flex-direction: column; gap: 24px; min-width: 320px; }
   
   .brutal-btn { 
@@ -266,19 +266,19 @@
     .module-topics, .spec-topics { padding: 20px 24px 40px; }
     .topic-list li, .spec-topic-list li { font-size: 16px; }
     
-    .spec { padding: 80px 24px; }
-    .spec h2 { margin-bottom: 40px; }
+    .spec { padding: 80px 20px; }
+    .spec h2 { margin-bottom: 40px; font-size: clamp(24px, 8vw, 40px); }
     
     .faq-header { padding: 60px 20px; }
-    .faq-pill { padding: 16px; width: 100%; box-sizing: border-box; font-size: 28px; }
-    .faq-wrapper { padding: 60px 24px; }
+    .faq-pill { padding: 16px; width: 100%; box-sizing: border-box; font-size: 24px; }
+    .faq-wrapper { padding: 60px 20px; }
     
     /* FOOTER MOBILE */
-    .footer-top { flex-direction: column; align-items: flex-start; padding: 80px 24px; gap: 60px; }
+    .footer-top { flex-direction: column; align-items: flex-start; padding: 60px 20px; gap: 40px; }
     .footer-actions { width: 100%; min-width: unset; }
-    .brutal-btn { width: 100%; padding: 20px; font-size: 20px; box-sizing: border-box; box-shadow: 6px 6px 0px var(--accent); }
-    .brutal-btn.primary { box-shadow: 6px 6px 0px #fff; }
-    .footer-bottom { flex-direction: column; align-items: flex-start; padding: 40px 24px; }
+    .brutal-btn { width: 100%; padding: 16px; font-size: 16px; box-sizing: border-box; box-shadow: 4px 4px 0px var(--accent); }
+    .brutal-btn.primary { box-shadow: 4px 4px 0px #fff; }
+    .footer-bottom { flex-direction: column; align-items: flex-start; padding: 40px 20px; }
     .footer-addr { text-align: left; }
   }
 
