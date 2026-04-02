@@ -100,12 +100,18 @@ nav{position:fixed;top:0;left:0;right:0;z-index:900;height:64px;display:flex;ali
 /* ═══════════════════════════════════
    STACKED CARDS — PURE CSS STICKY
    ═══════════════════════════════════ */
-.curriculum{background:var(--cream);padding:100px 0 0}
-.stack-top{padding:0 80px 80px}
-.cur-head{display:grid;grid-template-columns:1fr 1fr;gap:40px}
-.cur-h2{font-family:var(--head);font-size:clamp(56px,8vw,110px);line-height:.9;text-transform:uppercase}
-.cur-h2 em{font-style:normal;display:block;-webkit-text-stroke:2px var(--black);color:transparent}
-.cur-desc{font-size:17px;line-height:1.75;color:#555;max-width:380px}
+.curriculum{background:var(--cream);padding:120px 0 0}
+.stack-top{padding:0 40px 100px;text-align:center;max-width:1000px;margin:0 auto}
+.cur-label{font-family:var(--syne);font-size:11px;font-weight:700;letter-spacing:.25em;text-transform:uppercase;color:var(--mid);margin-bottom:24px;display:block}
+.cur-h2{font-family:var(--head);font-size:clamp(64px,10vw,160px);line-height:.85;text-transform:uppercase;letter-spacing:-.03em;margin-bottom:8px}
+.cur-h2 em{font-style:normal;display:block;-webkit-text-stroke:2.5px var(--black);color:transparent}
+.cur-sub{font-family:var(--head);font-size:clamp(28px,4vw,56px);color:var(--mid);text-transform:uppercase;letter-spacing:.02em;margin-bottom:32px;min-height:1.2em}
+.cur-sub .cur-type{color:var(--black)}
+.cur-sub .cur-type-cursor{display:inline-block;width:2px;height:.75em;background:var(--lime);margin-left:2px;vertical-align:middle;animation:blink .8s step-end infinite}
+.cur-pills{display:flex;justify-content:center;gap:12px;flex-wrap:wrap;margin-bottom:16px}
+.cur-pill{display:inline-flex;align-items:center;gap:8px;background:var(--black);color:var(--lime);font-family:var(--syne);font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:10px 24px;border-radius:100px}
+.cur-pill-outline{display:inline-flex;align-items:center;gap:8px;background:transparent;color:var(--black);font-family:var(--syne);font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:10px 24px;border-radius:100px;border:1.5px solid var(--border)}
+.cur-desc{font-size:16px;line-height:1.75;color:#777;max-width:520px;margin:24px auto 0}
 
 .stack-container{
   position:relative;
@@ -258,10 +264,15 @@ footer{background:var(--lime);padding:120px 80px 60px;position:relative;overflow
 <!-- ═══════ CURRICULUM ═══════ -->
 <section class="curriculum" id="curriculum">
   <div class="stack-top">
-    <div class="cur-head rv">
-      <div><h2 class="cur-h2">Marketing<em>Modules</em></h2></div>
-      <p class="cur-desc">Our curriculum is a high-octane blend of business strategy and technical execution. Scroll through the deck below — each card stacks on top of the last.</p>
+    <span class="cur-label rv">What You'll Master</span>
+    <h2 class="cur-h2 rv">The<em>Curriculum</em></h2>
+    <div class="cur-sub rv">From Zero to <span class="cur-type" id="curType">Expert</span><span class="cur-type-cursor"></span></div>
+    <div class="cur-pills rv">
+      <span class="cur-pill">✦ &nbsp;09 Core Modules</span>
+      <span class="cur-pill-outline">5 Months</span>
+      <span class="cur-pill-outline">Hands-On</span>
     </div>
+    <p class="cur-desc rv">A high-octane blend of business strategy and technical execution. Scroll through the deck — each card stacks on top of the last.</p>
   </div>
 
   <div class="stack-container">
@@ -495,6 +506,26 @@ document.querySelectorAll('.faq-q').forEach(q => {
     if(!wasOpen) it.classList.add('open');
   });
 });
+
+// ── CURRICULUM TYPEWRITER
+const curWords = ['Expert', 'Strategist', 'Marketer', 'Leader', 'Builder'];
+const curEl = document.getElementById('curType');
+let cwIdx=0, ccIdx=0, cDel=false;
+function curTypeLoop(){
+  const w = curWords[cwIdx];
+  if(!cDel){
+    ccIdx++;
+    curEl.textContent = w.substring(0, ccIdx);
+    if(ccIdx >= w.length){ cDel = true; setTimeout(curTypeLoop, 1800); return; }
+    setTimeout(curTypeLoop, 130);
+  } else {
+    ccIdx--;
+    curEl.textContent = w.substring(0, ccIdx);
+    if(ccIdx <= 0){ cDel = false; cwIdx = (cwIdx+1) % curWords.length; setTimeout(curTypeLoop, 300); return; }
+    setTimeout(curTypeLoop, 50);
+  }
+}
+setTimeout(curTypeLoop, 3000);
 
 // ── NAV SHADOW
 window.addEventListener('scroll', () => {
