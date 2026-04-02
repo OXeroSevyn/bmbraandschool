@@ -23,19 +23,18 @@
 html{scroll-behavior:smooth}
 body{background:var(--cream);color:var(--black);font-family:var(--body);overflow-x:hidden;cursor:none}
 
-/* ── SCROLLBAR */
 ::-webkit-scrollbar{width:4px}
 ::-webkit-scrollbar-track{background:var(--black)}
 ::-webkit-scrollbar-thumb{background:var(--lime);border-radius:4px}
 
-/* ── CURSOR */
+/* CURSOR */
 .c-dot{width:10px;height:10px;background:var(--lime);border-radius:50%;position:fixed;top:0;left:0;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);mix-blend-mode:difference}
 .c-ring{width:40px;height:40px;border:1.5px solid var(--lime);border-radius:50%;position:fixed;top:0;left:0;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:width .3s,height .3s,opacity .3s;opacity:.6}
 .c-ring.big{width:64px;height:64px;opacity:1}
 
-/* ── PRELOADER */
+/* PRELOADER */
 #pre{position:fixed;inset:0;background:var(--black);z-index:10000;display:flex;align-items:center;justify-content:center;transition:opacity .8s ease,visibility .8s}
-#pre.gone{opacity:0;visibility:hidden}
+#pre.gone{opacity:0;visibility:hidden;pointer-events:none}
 .pre-txt{font-family:var(--head);font-size:clamp(60px,15vw,180px);color:var(--cream);letter-spacing:-0.03em;overflow:hidden;line-height:1}
 .pre-txt span{color:var(--lime);display:inline-block;animation:slideUp .8s cubic-bezier(.16,1,.3,1) both}
 .pre-txt span:nth-child(2){animation-delay:.15s}
@@ -43,7 +42,7 @@ body{background:var(--cream);color:var(--black);font-family:var(--body);overflow
 @keyframes slideUp{from{transform:translateY(110%);opacity:0}to{transform:translateY(0);opacity:1}}
 @keyframes barLoad{from{width:0}to{width:100%}}
 
-/* ── NAV */
+/* NAV */
 nav{position:fixed;top:0;left:0;right:0;z-index:900;height:64px;display:flex;align-items:center;justify-content:space-between;padding:0 40px;border-bottom:1px solid var(--border);background:rgba(248,247,243,.94);backdrop-filter:blur(18px)}
 .nl{display:flex;align-items:center;gap:10px;text-decoration:none}
 .nl-box{width:34px;height:34px;background:var(--black);border-radius:6px;display:flex;align-items:center;justify-content:center;font-family:var(--syne);font-weight:800;font-size:12px;color:var(--lime)}
@@ -51,509 +50,403 @@ nav{position:fixed;top:0;left:0;right:0;z-index:900;height:64px;display:flex;ali
 .nr a{font-family:var(--syne);font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;text-decoration:none;color:var(--white);background:var(--black);padding:10px 26px;border-radius:100px;border:1.5px solid var(--black);transition:all .25s}
 .nr a:hover{background:var(--lime);color:var(--black);border-color:var(--lime)}
 
-/* ── HERO */
+/* HERO */
 .hero{min-height:100svh;background:var(--black);position:relative;overflow:hidden;padding-top:64px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}
-
-/* Background Elements */
 .hero-bg{position:absolute;inset:0;z-index:0;pointer-events:none}
 .hb-mesh{position:absolute;inset:0;background:radial-gradient(ellipse 80% 70% at 50% 50%,rgba(200,255,0,0.1) 0%,transparent 70%),radial-gradient(ellipse 50% 50% at 10% 20%,rgba(55,0,255,0.08) 0%,transparent 60%)}
 .hb-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.02) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.02) 1px,transparent 1px);background-size:60px 60px}
 .hb-ring{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:600px;height:600px;border:1px solid rgba(200,255,0,.12);border-radius:50%;animation:spin 30s linear infinite}
-.hb-ring::after{content:'';position:absolute;inset:60px;border:1px solid rgba(200,255,0,.04);border-radius:50%}
+@keyframes spin{from{transform:translate(-50%,-50%) rotate(0deg)}to{transform:translate(-50%,-50%) rotate(360deg)}}
 
-/* Content */
-.hero-l{max-width:1100px;width:100%;padding:100px 48px;position:relative;z-index:2;display:flex;flex-direction:column;align-items:center;justify-content:center}
-.h-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);padding:8px 18px;border-radius:100px;font-family:var(--syne);font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.85);width:fit-content;margin-bottom:32px}
+.hero-l{max-width:1100px;width:100%;padding:100px 48px;position:relative;z-index:2}
+.h-badge{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);padding:8px 18px;border-radius:100px;font-family:var(--syne);font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.85);margin-bottom:32px;display:inline-flex;align-items:center;gap:8px}
 .h-dot{width:7px;height:7px;border-radius:50%;background:var(--lime);box-shadow:0 0 8px var(--lime);animation:pulse 2s ease-in-out infinite}
 @keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(.8)}}
-
-.h-main-text{display:flex;flex-direction:column;align-items:center;padding:40px 0}
 .h-eyebrow{font-family:var(--syne);font-size:clamp(11px,1.2vw,15px);font-weight:500;letter-spacing:.25em;text-transform:uppercase;color:rgba(255,255,255,.35);margin-bottom:16px}
 .h-t1{font-family:var(--head);font-size:clamp(70px,10vw,140px);line-height:.92;letter-spacing:-.02em;color:var(--lime);text-transform:uppercase}
-.h-t2{font-family:var(--head);font-size:clamp(70px,10vw,140px);line-height:.92;letter-spacing:-.02em;color:var(--white);text-transform:uppercase;display:flex;justify-content:center;align-items:center;min-height:1em}
-.type-wrap{display:inline-block;position:relative;color:var(--white)}
+.h-t2{font-family:var(--head);font-size:clamp(70px,10vw,140px);line-height:.92;letter-spacing:-.02em;color:var(--white);text-transform:uppercase;min-height:1em}
 .type-cursor{display:inline-block;width:3px;height:0.8em;background:var(--lime);margin-left:4px;vertical-align:middle;animation:blink 0.8s step-end infinite}
 @keyframes blink{from,to{opacity:1}50%{opacity:0}}
 .h-desc{margin:40px auto 0;font-size:16px;color:rgba(255,255,255,.5);line-height:1.7;max-width:540px}
-
-.h-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;border:1px solid rgba(255,255,255,.08);border-radius:12px;overflow:hidden;width:100%;margin-top:60px}
-@media(max-width:1100px){.h-stats{grid-template-columns:1fr 1fr}}
-.h-stat{padding:28px 32px;background:rgba(255,255,255,.03);transition:background 0.3s, transform 0.3s}
-.h-stat:hover{background:rgba(200,255,0,0.1);transform:scale(1.02)}
-.hs-n{font-family:var(--head);font-size:clamp(28px,3.5vw,40px);color:var(--lime);letter-spacing:-.01em}
+.h-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;border:1px solid rgba(255,255,255,.08);border-radius:12px;overflow:hidden;margin-top:60px}
+.h-stat{padding:28px 32px;background:rgba(255,255,255,.03);transition:all 0.3s}
+.h-stat:hover{background:rgba(200,255,0,0.1)}
+.hs-n{font-family:var(--head);font-size:clamp(28px,3.5vw,40px);color:var(--lime)}
 .hs-l{font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.3);margin-top:2px}
 
-/* ── TICKER */
+/* TICKER */
 .ticker{overflow:hidden;background:var(--lime);border-top:2px solid var(--black);border-bottom:2px solid var(--black);padding:18px 0}
 .ticker-track{display:inline-flex;animation:tick 26s linear infinite;white-space:nowrap}
 .ticker-item{font-family:var(--syne);font-size:clamp(13px,1.5vw,18px);font-weight:800;text-transform:uppercase;letter-spacing:.06em;color:var(--black);padding:0 28px;display:flex;align-items:center;gap:14px}
 .tsep{width:5px;height:5px;border-radius:50%;background:rgba(0,0,0,.25)}
 @keyframes tick{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
 
-/* ── MISSION STRIP */
+/* MISSION */
 .mission{background:var(--black);padding:90px 80px;border-bottom:1px solid rgba(255,255,255,.06)}
 .mission-inner{display:flex;align-items:flex-start;gap:80px;max-width:1200px;margin:0 auto}
-.mission-label{font-family:var(--syne);font-size:11px;font-weight:700;letter-spacing:.25em;text-transform:uppercase;color:rgba(255,255,255,.2);padding-top:8px;white-space:nowrap}
-.mission-divider{width:1px;background:rgba(255,255,255,.1);align-self:stretch;flex-shrink:0}
-.mission-text{font-family:var(--syne);font-size:clamp(22px,3.2vw,38px);font-weight:600;line-height:1.45;color:rgba(255,255,255,.55);letter-spacing:-.01em}
+.mission-label{font-family:var(--syne);font-size:11px;font-weight:700;letter-spacing:.25em;text-transform:uppercase;color:rgba(255,255,255,.2);padding-top:8px}
+.mission-divider{width:1px;background:rgba(255,255,255,.1);align-self:stretch}
+.mission-text{font-family:var(--syne);font-size:clamp(22px,3.2vw,38px);font-weight:600;line-height:1.45;color:rgba(255,255,255,.55)}
 .mission-text strong{color:var(--white)}
 .mission-text em{color:var(--lime);font-style:normal}
 
-/* ── DURATION STRIP */
+/* DURATION STRIP */
 .dur-strip{background:var(--white);border-bottom:1px solid var(--border);padding:22px 80px;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
-.dur-lbl{font-family:var(--syne);font-size:12px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--black)}
+.dur-lbl{font-family:var(--syne);font-size:11px;font-weight:800;letter-spacing:.12em;text-transform:uppercase}
 .dur-dot{width:4px;height:4px;background:#ccc;border-radius:50%}
 .dur-val{font-size:14px;color:var(--mid)}
-.dur-chip{background:var(--black);color:var(--lime);font-family:var(--syne);font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:5px 16px;border-radius:100px;margin-left:6px}
+.dur-chip{background:var(--black);color:var(--lime);font-family:var(--syne);font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:5px 16px;border-radius:100px}
 
-/* ── CURRICULUM SECTION */
-.curriculum{background:var(--cream)}
-
-/* Curriculum Header */
-.cur-head{display:grid;grid-template-columns:1fr 1fr;border-bottom:1px solid var(--border)}
-.cur-head-l{padding:80px 80px 60px;border-right:1px solid var(--border)}
-.cur-label{font-family:var(--syne);font-size:11px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--mid);margin-bottom:20px}
-.cur-h2{font-family:var(--head);font-size:clamp(56px,8vw,110px);line-height:.9;letter-spacing:-.02em;text-transform:uppercase;color:var(--black)}
+/* ═══════════════════════════════════
+   STACKED CARDS — PURE CSS STICKY
+   ═══════════════════════════════════ */
+.curriculum{background:var(--cream);padding:100px 0 0}
+.stack-top{padding:0 80px 80px}
+.cur-head{display:grid;grid-template-columns:1fr 1fr;gap:40px}
+.cur-h2{font-family:var(--head);font-size:clamp(56px,8vw,110px);line-height:.9;text-transform:uppercase}
 .cur-h2 em{font-style:normal;display:block;-webkit-text-stroke:2px var(--black);color:transparent}
-.cur-count-pill{display:inline-flex;align-items:center;gap:10px;margin-top:32px;background:var(--black);color:var(--lime);font-family:var(--syne);font-size:13px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:12px 28px;border-radius:100px}
-.cur-head-r{padding:80px 80px 60px;display:flex;flex-direction:column;justify-content:flex-end}
-.cur-desc{font-size:17px;line-height:1.75;color:#555;max-width:380px;margin-top:auto}
+.cur-desc{font-size:17px;line-height:1.75;color:#555;max-width:380px}
 
-/* Module Table */
-.mod-table{width:100%;border-collapse:collapse;background:var(--white)}
-.mod-row{display:grid;grid-template-columns:72px 1fr 2fr;border-bottom:1px solid var(--border);transition:background .3s}
-.mod-row:hover{background:var(--lime)}
-.mod-row:hover .mr-num,.mod-row:hover .mr-title,.mod-row:hover .mr-desc{color:var(--black)}
-.mr-num{padding:32px 24px;font-family:var(--head);font-size:clamp(32px,4vw,52px);color:rgba(0,0,0,.12);letter-spacing:-.02em;border-right:1px solid var(--border);display:flex;align-items:center;justify-content:center;transition:color .3s}
-.mr-mid{padding:32px 36px;border-right:1px solid var(--border);display:flex;flex-direction:column;justify-content:center;gap:6px}
-.mr-mod-label{font-family:var(--syne);font-size:10px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--mid);transition:color .3s}
-.mr-title{font-family:var(--syne);font-size:clamp(16px,1.8vw,22px);font-weight:800;line-height:1.2;letter-spacing:-.01em;color:var(--black);transition:color .3s}
-.mr-topics{padding:32px 48px;display:flex;flex-direction:column;justify-content:center;gap:0}
-.mr-tag{font-size:13px;font-weight:400;color:#555;padding:4px 0;border-bottom:1px solid rgba(0,0,0,.05);display:flex;align-items:center;gap:10px;transition:color .3s}
-.mr-tag:last-child{border-bottom:none}
-.mr-tag::before{content:'';width:4px;height:4px;border-radius:50%;background:var(--black);flex-shrink:0;transition:background .3s}
-.mod-row:hover .mr-tag::before{background:var(--black)}
-.mod-row:hover .mr-tag,.mod-row:hover .mr-mod-label{color:rgba(0,0,0,.6)}
+.stack-container{
+  position:relative;
+  padding:0 40px 200px;
+  max-width:1200px;
+  margin:0 auto;
+}
 
-/* ── SPECIALIZATION SECTION */
-.spec{background:var(--black);padding:100px 80px}
-.spec-top{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:64px;gap:40px;flex-wrap:wrap}
-.spec-ey{font-family:var(--syne);font-size:11px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.25);border:1px solid rgba(255,255,255,.1);padding:8px 20px;border-radius:100px;display:inline-block;margin-bottom:20px}
-.spec-h2{font-family:var(--head);font-size:clamp(48px,8vw,110px);line-height:.9;letter-spacing:-.03em;color:var(--white);text-transform:uppercase}
+.stack-card{
+  position:sticky;
+  top:100px;
+  width:100%;
+  background:var(--white);
+  border:1px solid var(--border);
+  border-radius:24px;
+  padding:56px 60px;
+  min-height:520px;
+  display:flex;
+  flex-direction:column;
+  box-shadow:0 4px 20px rgba(0,0,0,0.04), 0 20px 60px rgba(0,0,0,0.08);
+  cursor:pointer;
+  overflow:hidden;
+  margin-bottom:60px;
+  transition:box-shadow .3s;
+}
+.stack-card:hover{
+  box-shadow:0 4px 20px rgba(0,0,0,0.06), 0 30px 80px rgba(0,0,0,0.12);
+}
+
+.sc-num{position:absolute;right:48px;top:32px;font-family:var(--head);font-size:clamp(80px,12vw,160px);color:rgba(0,0,0,.04);line-height:1;z-index:0;pointer-events:none}
+.sc-tag{font-family:var(--syne);font-size:11px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--mid);margin-bottom:16px;position:relative;z-index:2}
+.sc-title{font-family:var(--syne);font-size:clamp(26px,3.5vw,52px);font-weight:800;line-height:1.1;color:var(--black);margin-bottom:16px;position:relative;z-index:2;max-width:75%}
+.sc-desc{font-size:clamp(15px,1.1vw,18px);color:rgba(0,0,0,.5);line-height:1.65;margin-bottom:32px;position:relative;z-index:2;max-width:560px}
+.sc-preview{display:flex;flex-wrap:wrap;gap:10px;position:relative;z-index:2}
+.sp-dot{font-size:13px;font-weight:600;color:rgba(0,0,0,.35);background:rgba(0,0,0,.05);padding:7px 18px;border-radius:100px}
+
+/* Reveal overlay */
+.sc-topics{position:absolute;inset:0;padding:56px 60px;background:var(--lime);display:grid;grid-template-columns:1fr 1fr;align-content:center;gap:20px;opacity:0;visibility:hidden;transform:translateY(100%);transition:all .5s cubic-bezier(.16,1,.3,1);z-index:10;border-radius:24px}
+.stack-card:hover .sc-topics{opacity:1;visibility:visible;transform:translateY(0)}
+.st-tag{font-size:clamp(15px,1.5vw,20px);font-weight:700;color:var(--black);padding:16px 0;display:flex;align-items:center;gap:14px;border-bottom:1px solid rgba(0,0,0,.1)}
+.st-tag::before{content:'';width:6px;height:6px;background:var(--black);border-radius:50%;flex-shrink:0}
+
+.sc-decor{position:absolute;left:48px;bottom:-30px;font-family:var(--head);font-size:clamp(100px,20vw,240px);color:rgba(0,0,0,.02);text-transform:uppercase;pointer-events:none;z-index:0;line-height:.8}
+
+/* Specialization */
+.stack-card.spec-card{background:var(--black);border-color:rgba(255,255,255,.08)}
+.stack-card.spec-card .sc-num{color:rgba(255,255,255,.06)}
+.stack-card.spec-card .sc-tag{color:rgba(255,255,255,.3)}
+.stack-card.spec-card .sc-title{color:var(--white)}
+.stack-card.spec-card .sc-desc{color:rgba(255,255,255,.4)}
+.stack-card.spec-card .sp-dot{background:rgba(255,255,255,.08);color:rgba(255,255,255,.4)}
+.stack-card.spec-card .sc-decor{color:rgba(255,255,255,.03)}
+
+.spec-intro{padding:120px 80px 80px;text-align:center;background:var(--black);position:relative;z-index:1}
+.spec-ey{font-family:var(--syne);font-size:11px;font-weight:700;text-transform:uppercase;color:var(--lime);letter-spacing:.2em;margin-bottom:20px;display:block}
+.spec-h2{font-family:var(--head);font-size:clamp(48px,10vw,140px);color:var(--white);text-transform:uppercase;line-height:.9}
 .spec-h2 em{color:var(--lime);font-style:normal}
-.spec-sub{font-size:15px;color:rgba(255,255,255,.4);line-height:1.6;max-width:300px}
 
-.spec-grid{display:grid;grid-template-columns:1fr 1fr;gap:2px}
-.spec-card{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);padding:56px 48px;position:relative;overflow:hidden;transition:all .4s cubic-bezier(.16,1,.3,1)}
-.spec-card:hover{background:rgba(200,255,0,.06);border-color:rgba(200,255,0,.25);transform:translateY(-4px)}
-.spec-card:hover .sc-num{opacity:.06}
-.sc-num{position:absolute;right:-16px;bottom:-20px;font-family:var(--head);font-size:clamp(100px,15vw,180px);color:var(--lime);opacity:.04;line-height:1;letter-spacing:-.04em;transition:opacity .4s;pointer-events:none}
-.sc-ey{font-family:var(--syne);font-size:10px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.2);margin-bottom:16px}
-.sc-title{font-family:var(--head);font-size:clamp(28px,3vw,42px);color:var(--lime);letter-spacing:-.01em;margin-bottom:32px;text-transform:uppercase}
-.sc-list{list-style:none;display:flex;flex-direction:column;gap:12px}
-.sc-list li{font-size:15px;color:rgba(255,255,255,.55);display:flex;align-items:flex-start;gap:12px;padding-bottom:12px;border-bottom:1px solid rgba(255,255,255,.05)}
-.sc-list li:last-child{border-bottom:none;padding-bottom:0}
-.sc-list li::before{content:'';width:5px;height:5px;border-radius:50%;background:var(--lime);flex-shrink:0;margin-top:8px;box-shadow:0 0 6px var(--lime)}
-
-/* ── FAQ */
-.faq{background:var(--black);padding:0 80px 100px}
-.faq-head{text-align:center;padding:80px 0 64px;border-bottom:1px solid rgba(255,255,255,.06);margin-bottom:64px}
-.faq-h{font-family:var(--head);font-size:clamp(48px,8vw,100px);letter-spacing:-.03em;color:var(--white);text-transform:uppercase}
+/* FAQ */
+.faq{background:var(--black);padding:100px 40px}
+.faq-head{text-align:center;margin-bottom:80px}
+.faq-h{font-family:var(--head);font-size:clamp(60px,10vw,140px);color:var(--white);text-transform:uppercase}
 .faq-h span{color:var(--lime)}
-.faq-wrap{max-width:840px;margin:0 auto;display:flex;flex-direction:column;gap:2px}
-.faq-item{border:1px solid rgba(255,255,255,.07);border-radius:8px;overflow:hidden;transition:border-color .3s}
-.faq-item.open{border-color:var(--lime)}
-.faq-q{padding:24px 28px;display:flex;justify-content:space-between;align-items:center;gap:20px;cursor:pointer}
-.faq-q h4{font-family:var(--syne);font-size:clamp(15px,1.8vw,19px);font-weight:700;color:var(--white);letter-spacing:-.01em;transition:color .3s}
-.faq-item.open .faq-q h4{color:var(--lime)}
-.faq-icon{width:30px;height:30px;border-radius:50%;border:1.5px solid rgba(255,255,255,.15);display:flex;align-items:center;justify-content:center;color:var(--white);font-size:16px;flex-shrink:0;transition:all .3s}
-.faq-item.open .faq-icon{background:var(--lime);border-color:var(--lime);color:var(--black);transform:rotate(45deg)}
-.faq-body{max-height:0;overflow:hidden;transition:max-height .4s cubic-bezier(.16,1,.3,1)}
-.faq-ans{padding:0 28px 24px;font-size:15px;color:rgba(255,255,255,.5);line-height:1.7}
+.faq-wrap{max-width:900px;margin:0 auto}
+.faq-item{border:1px solid rgba(255,255,255,.08);border-radius:16px;margin-bottom:12px;overflow:hidden;transition:all .3s}
+.faq-item.open{border-color:var(--lime);background:rgba(255,255,255,0.02)}
+.faq-q{padding:28px 36px;display:flex;justify-content:space-between;align-items:center;cursor:pointer}
+.faq-q h4{font-family:var(--syne);font-size:19px;font-weight:700;color:var(--white)}
+.faq-icon{width:32px;height:32px;border:1px solid rgba(255,255,255,0.2);border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--white);transition:all .3s}
+.faq-item.open .faq-icon{background:var(--lime);color:var(--black);border-color:var(--lime);transform:rotate(45deg)}
+.faq-ans{padding:0 36px 28px;color:rgba(255,255,255,.5);line-height:1.7;max-height:0;overflow:hidden;transition:max-height .4s ease}
+.faq-item.open .faq-ans{max-height:200px}
 
-/* ── FOOTER */
-footer{background:var(--lime);position:relative;overflow:hidden;padding:100px 80px 60px}
-.ft-big{position:absolute;bottom:-40px;left:50%;transform:translateX(-50%);font-family:var(--head);font-size:clamp(100px,22vw,320px);color:rgba(0,0,0,.06);white-space:nowrap;line-height:1;pointer-events:none;letter-spacing:-.04em}
-.ft-inner{position:relative;z-index:2}
-.ft-top{display:flex;align-items:flex-start;justify-content:space-between;gap:40px;margin-bottom:80px;flex-wrap:wrap}
-.ft-join{font-family:var(--head);font-size:clamp(72px,14vw,200px);color:var(--black);line-height:.85;letter-spacing:-.04em;text-transform:uppercase}
-.ft-join-sub{font-family:var(--syne);font-size:clamp(18px,2.5vw,28px);font-weight:700;color:rgba(0,0,0,.4);letter-spacing:-.01em;margin-top:8px}
-.ft-right{display:flex;flex-direction:column;gap:12px;padding-top:20px}
-.ft-link{display:inline-flex;align-items:center;gap:10px;font-family:var(--syne);font-size:clamp(14px,1.5vw,18px);font-weight:800;color:var(--black);text-decoration:none;padding:14px 28px;border-radius:100px;border:2px solid rgba(0,0,0,.2);transition:all .3s cubic-bezier(.16,1,.3,1)}
-.ft-link:hover{background:var(--black);color:var(--lime);border-color:var(--black);transform:translateX(6px)}
-.ft-divider{width:100%;height:1px;background:rgba(0,0,0,.1);margin:40px 0}
-.ft-bottom{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px}
-.ft-addr{font-size:13px;font-weight:500;letter-spacing:.06em;text-transform:uppercase;color:rgba(0,0,0,.4)}
-.ft-copy{font-size:12px;color:rgba(0,0,0,.35);font-weight:500}
+/* FOOTER */
+footer{background:var(--lime);padding:120px 80px 60px;position:relative;overflow:hidden}
+.ft-join{font-family:var(--head);font-size:clamp(80px,15vw,220px);line-height:.8;color:var(--black);margin-bottom:60px}
+.ft-links{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:80px}
+.ft-link{text-decoration:none;font-family:var(--syne);font-weight:800;color:var(--black);padding:16px 32px;border-radius:100px;border:2px solid rgba(0,0,0,0.15);transition:all .3s}
+.ft-link:hover{background:var(--black);color:var(--lime);border-color:var(--black);transform:translateY(-4px)}
+.ft-bottom{display:flex;justify-content:space-between;padding-top:40px;border-top:1px solid rgba(0,0,0,0.1);font-size:13px;font-weight:600}
 
-/* ── REVEAL ANIMATIONS */
-.r{opacity:0;transform:translateY(24px);transition:opacity .7s cubic-bezier(.16,1,.3,1),transform .7s cubic-bezier(.16,1,.3,1)}
-.r.on{opacity:1;transform:translateY(0)}
-.r2{opacity:0;transform:translateX(-20px);transition:opacity .7s cubic-bezier(.16,1,.3,1),transform .7s cubic-bezier(.16,1,.3,1)}
-.r2.on{opacity:1;transform:translateX(0)}
+/* REVEAL */
+.rv{opacity:0;transform:translateY(30px);transition:all .8s cubic-bezier(.16,1,.3,1)}
+.rv.on{opacity:1;transform:translateY(0)}
 
-/* ── RESPONSIVE */
-@media (pointer:coarse){.c-dot,.c-ring{display:none}body{cursor:auto}}
 @media(max-width:900px){
   nav{padding:0 20px}
-  .hero{grid-template-columns:1fr;min-height:auto}
-  .hero-l{padding:40px 24px;border-right:none;border-bottom:1px solid rgba(255,255,255,.07)}
-  .hero-r{min-height:280px;padding:40px 24px}
+  .hero-l{padding:80px 24px}
   .mission{padding:60px 24px}
   .mission-inner{flex-direction:column;gap:24px}
   .mission-divider{display:none}
   .dur-strip{padding:20px 24px}
+  .stack-top{padding:0 24px 60px}
   .cur-head{grid-template-columns:1fr}
-  .cur-head-l{padding:60px 24px 40px;border-right:none;border-bottom:1px solid var(--border)}
-  .cur-head-r{padding:40px 24px 60px}
-  .mod-row{grid-template-columns:48px 1fr}
-  .mr-topics{display:none}
-  .mr-mid{padding:20px 20px}
-  .mr-num{padding:20px 12px;font-size:28px}
-  .spec{padding:60px 24px}
-  .spec-grid{grid-template-columns:1fr}
-  .spec-card{padding:40px 24px}
-  .faq{padding:0 24px 60px}
-  footer{padding:60px 24px 40px}
-  .ft-top{flex-direction:column}
-  .ft-bottom{flex-direction:column;align-items:flex-start}
+  .stack-container{padding:0 20px 100px}
+  .stack-card{padding:32px;min-height:420px;top:70px;margin-bottom:40px;border-radius:20px}
+  .sc-num{font-size:80px;right:20px;top:20px}
+  .sc-topics{grid-template-columns:1fr;padding:32px;border-radius:20px}
+  .spec-intro{padding:80px 24px 60px}
+  .faq{padding:60px 24px}
+  footer{padding:80px 24px 40px}
+  .ft-bottom{flex-direction:column;gap:8px}
+  .h-stats{grid-template-columns:1fr 1fr}
 }
+@media(pointer:coarse){.c-dot,.c-ring{display:none}body{cursor:auto}}
 </style>
 </head>
 <body>
 
-<!-- Preloader -->
-<div id="pre">
-  <div class="pre-txt"><span>BRAAND</span><span style="color:var(--lime)">SCHOOL</span></div>
-  <div class="pre-bar"></div>
-</div>
+<div id="pre"><div class="pre-txt"><span>BRAAND</span><span>SCHOOL</span></div><div class="pre-bar"></div></div>
+<div class="c-dot" id="cDot"></div><div class="c-ring" id="cRing"></div>
 
-<!-- Cursor -->
-<div class="c-dot" id="cDot"></div>
-<div class="c-ring" id="cRing"></div>
-
-<!-- NAV -->
 <nav>
-  <a href="#" class="nl">
-    <div class="nl-box">Bs</div>
-    <span class="nl-name">BraandSchool</span>
-  </a>
+  <a href="#" class="nl"><div class="nl-box">Bs</div><span class="nl-name">BraandSchool</span></a>
   <div class="nr"><a href="#enroll">Enroll Now</a></div>
 </nav>
 
-<!-- HERO -->
 <section class="hero">
-  <!-- Background Layers -->
-  <div class="hero-bg">
-    <div class="hb-mesh"></div>
-    <div class="hb-grid"></div>
-    <div class="hb-ring"></div>
-  </div>
-
-  <!-- Content -->
+  <div class="hero-bg"><div class="hb-mesh"></div><div class="hb-grid"></div><div class="hb-ring"></div></div>
   <div class="hero-l">
-    <div class="h-badge r">
-      <span class="h-dot"></span>
-      Braand School — Siliguri
-    </div>
-
+    <div class="h-badge rv"><span class="h-dot"></span>Braand School — Siliguri</div>
     <div class="h-main-text">
-      <p class="h-eyebrow r">The Premier</p>
-      <h1>
-        <div class="h-t1 r">Business &</div>
-        <div class="h-t2 r">
-          <span class="type-wrap" id="typewriter">Marketing</span><span class="type-cursor"></span>
-        </div>
+      <p class="h-eyebrow rv">The Premier</p>
+      <h1 class="rv">
+        <div class="h-t1">Business &</div>
+        <div class="h-t2"><span id="typewriter">Marketing</span><span class="type-cursor"></span></div>
       </h1>
-      <p class="h-desc r">A 5-month, hands-on program that doesn't just teach digital marketing — it puts you in the driver's seat of a real online business.</p>
+      <p class="h-desc rv">A 5-month, hands-on program that creates the next generation of business leaders and marketing specialists.</p>
     </div>
-
-    <div class="h-stats r">
-      <div class="h-stat">
-        <div class="hs-n">5 Mo.</div>
-        <div class="hs-l">Duration</div>
-      </div>
-      <div class="h-stat">
-        <div class="hs-n">09</div>
-        <div class="hs-l">Modules</div>
-      </div>
-      <div class="h-stat">
-        <div class="hs-n">5×/wk</div>
-        <div class="hs-l">Classes</div>
-      </div>
-      <div class="h-stat">
-        <div class="hs-n">Live</div>
-        <div class="hs-l">Batches</div>
-      </div>
+    <div class="h-stats rv">
+      <div class="h-stat"><div class="hs-n">5 Mo.</div><div class="hs-l">Duration</div></div>
+      <div class="h-stat"><div class="hs-n">09</div><div class="hs-l">Modules</div></div>
+      <div class="h-stat"><div class="hs-n">5×/wk</div><div class="hs-l">Classes</div></div>
+      <div class="h-stat"><div class="hs-n">Live</div><div class="hs-l">Batches</div></div>
     </div>
   </div>
 </section>
 
-<!-- TICKER -->
-<div class="ticker">
-  <div class="ticker-track">
-    <span class="ticker-item">SEO <span class="tsep"></span></span>
-    <span class="ticker-item">GOOGLE ADS <span class="tsep"></span></span>
-    <span class="ticker-item">SOCIAL MEDIA <span class="tsep"></span></span>
-    <span class="ticker-item">CONTENT STRATEGY <span class="tsep"></span></span>
-    <span class="ticker-item">CANVA <span class="tsep"></span></span>
-    <span class="ticker-item">WORDPRESS <span class="tsep"></span></span>
-    <span class="ticker-item">AUTOMATION <span class="tsep"></span></span>
-    <span class="ticker-item">ECOMMERCE <span class="tsep"></span></span>
-    <span class="ticker-item">NO-CODE <span class="tsep"></span></span>
-    <span class="ticker-item">SEO <span class="tsep"></span></span>
-    <span class="ticker-item">GOOGLE ADS <span class="tsep"></span></span>
-    <span class="ticker-item">SOCIAL MEDIA <span class="tsep"></span></span>
-    <span class="ticker-item">CONTENT STRATEGY <span class="tsep"></span></span>
-    <span class="ticker-item">CANVA <span class="tsep"></span></span>
-    <span class="ticker-item">WORDPRESS <span class="tsep"></span></span>
-    <span class="ticker-item">AUTOMATION <span class="tsep"></span></span>
-    <span class="ticker-item">ECOMMERCE <span class="tsep"></span></span>
-    <span class="ticker-item">NO-CODE <span class="tsep"></span></span>
-  </div>
-</div>
+<div class="ticker"><div class="ticker-track">
+  <span class="ticker-item">SEO <span class="tsep"></span></span><span class="ticker-item">GOOGLE ADS <span class="tsep"></span></span><span class="ticker-item">SOCIAL MEDIA <span class="tsep"></span></span>
+  <span class="ticker-item">CONTENT STRATEGY <span class="tsep"></span></span><span class="ticker-item">CANVA <span class="tsep"></span></span><span class="ticker-item">WORDPRESS <span class="tsep"></span></span>
+  <span class="ticker-item">AUTOMATION <span class="tsep"></span></span><span class="ticker-item">ECOMMERCE <span class="tsep"></span></span><span class="ticker-item">NO-CODE <span class="tsep"></span></span>
+  <span class="ticker-item">SEO <span class="tsep"></span></span><span class="ticker-item">GOOGLE ADS <span class="tsep"></span></span><span class="ticker-item">SOCIAL MEDIA <span class="tsep"></span></span>
+</div></div>
 
-<!-- MISSION -->
-<div class="mission r">
-  <div class="mission-inner">
-    <div class="mission-label">Our Philosophy</div>
-    <div class="mission-divider"></div>
-    <p class="mission-text">We believe in learning by doing. <em>You won't just be reading</em> about Digital Marketing — you'll be running <strong>Your Own Online Business.</strong></p>
-  </div>
-</div>
+<div class="mission rv"><div class="mission-inner"><div class="mission-label">Our Philosophy</div><div class="mission-divider"></div><p class="mission-text">We believe in learning by doing. <em>You won't just be reading</em> about Digital Marketing — you'll be running <strong>Your Own Online Business.</strong></p></div></div>
 
-<!-- DURATION STRIP -->
-<div class="dur-strip r">
-  <span class="dur-lbl">Course Duration</span>
-  <span class="dur-dot"></span>
-  <span class="dur-val">5 months &nbsp;·&nbsp; 5 days a week</span>
-  <span class="dur-chip">Batches Running</span>
-</div>
+<div class="dur-strip rv"><span class="dur-lbl">Course Duration</span><span class="dur-dot"></span><span class="dur-val">5 months &nbsp;·&nbsp; 5 days a week</span><span class="dur-chip">Batches Running</span></div>
 
-<!-- CURRICULUM -->
-<section class="curriculum">
-  <div class="cur-head">
-    <div class="cur-head-l r2">
-      <div class="cur-label">Curriculum</div>
-      <h2 class="cur-h2">Marketing<em>Modules</em></h2>
-      <div class="cur-count-pill">✦ &nbsp;09 Core Subjects</div>
-    </div>
-    <div class="cur-head-r r">
-      <p class="cur-desc">Seven foundational modules cover every pillar of modern digital marketing — from business basics and AI tools through to SEO, paid ads, and CRM automation.</p>
+<!-- ═══════ CURRICULUM ═══════ -->
+<section class="curriculum" id="curriculum">
+  <div class="stack-top">
+    <div class="cur-head rv">
+      <div><h2 class="cur-h2">Marketing<em>Modules</em></h2></div>
+      <p class="cur-desc">Our curriculum is a high-octane blend of business strategy and technical execution. Scroll through the deck below — each card stacks on top of the last.</p>
     </div>
   </div>
 
-  <div class="mod-table">
+  <div class="stack-container">
 
-    <div class="mod-row r">
-      <div class="mr-num">01</div>
-      <div class="mr-mid">
-        <span class="mr-mod-label">Module — 1</span>
-        <span class="mr-title">Marketing & Business Fundamentals</span>
-      </div>
-      <div class="mr-topics">
-        <div class="mr-tag">Planning your Business (Business Name, USPs)</div>
-        <div class="mr-tag">Competitor Research</div>
-        <div class="mr-tag">AIDA Framework</div>
-        <div class="mr-tag">5 Ps of Marketing</div>
+    <div class="stack-card" style="z-index:1">
+      <div class="sc-num">01</div>
+      <div class="sc-tag">Module — 01</div>
+      <div class="sc-title">Marketing & Business Fundamentals</div>
+      <div class="sc-desc">Master the core concepts of marketing strategy, competitor research, and branding from the ground up.</div>
+      <div class="sc-preview"><span class="sp-dot">Strategy</span><span class="sp-dot">Competitor Audit</span><span class="sp-dot">USP</span></div>
+      <div class="sc-decor">STRATEGY</div>
+      <div class="sc-topics">
+        <div class="st-tag">Planning your Business</div>
+        <div class="st-tag">Competitor Research</div>
+        <div class="st-tag">AIDA Framework</div>
+        <div class="st-tag">5 Ps of Marketing</div>
       </div>
     </div>
 
-    <div class="mod-row r">
-      <div class="mr-num">02</div>
-      <div class="mr-mid">
-        <span class="mr-mod-label">Module — 2</span>
-        <span class="mr-title">Gen AI & Design Tools</span>
-      </div>
-      <div class="mr-topics">
-        <div class="mr-tag">Canva & Adobe Firefly</div>
-        <div class="mr-tag">Generative AI in Automations</div>
-        <div class="mr-tag">Gen AI in Content Creation</div>
-        <div class="mr-tag">AI Agents to Automate Tasks</div>
-        <div class="mr-tag">Development with AI</div>
-      </div>
-    </div>
-
-    <div class="mod-row r">
-      <div class="mr-num">03</div>
-      <div class="mr-mid">
-        <span class="mr-mod-label">Module — 3</span>
-        <span class="mr-title">Social Media Management</span>
-      </div>
-      <div class="mr-topics">
-        <div class="mr-tag">Understanding Social Media Algorithms</div>
-        <div class="mr-tag">Meta Business Suite Setup (Facebook & Instagram)</div>
-        <div class="mr-tag">Managing Multiple Social Media Platforms</div>
-        <div class="mr-tag">Content Planner & Social Media Automation</div>
-        <div class="mr-tag">Campaign Setup: Awareness, Leads, Engagement, Sales</div>
+    <div class="stack-card" style="z-index:2">
+      <div class="sc-num">02</div>
+      <div class="sc-tag">Module — 02</div>
+      <div class="sc-title">Gen AI & Design Tools</div>
+      <div class="sc-desc">Accelerate your workflow with generative AI for content, graphics, and automation.</div>
+      <div class="sc-preview"><span class="sp-dot">AI Tools</span><span class="sp-dot">Visual Design</span></div>
+      <div class="sc-decor">AI / GD</div>
+      <div class="sc-topics">
+        <div class="st-tag">Canva & Adobe Firefly</div>
+        <div class="st-tag">Generative AI Automations</div>
+        <div class="st-tag">AI Agents & Workflows</div>
       </div>
     </div>
 
-    <div class="mod-row r">
-      <div class="mr-num">04</div>
-      <div class="mr-mid">
-        <span class="mr-mod-label">Module — 4</span>
-        <span class="mr-title">Website Development</span>
-      </div>
-      <div class="mr-topics">
-        <div class="mr-tag">Basics of HTML, CSS & JavaScript</div>
-        <div class="mr-tag">Static Website Creation</div>
-        <div class="mr-tag">Intro to Domain & Hosting</div>
-        <div class="mr-tag">Elementor Website Builder & Plugins</div>
-        <div class="mr-tag">Speed & Security Optimizations</div>
-        <div class="mr-tag">Build Your Own Website</div>
-      </div>
-    </div>
-
-    <div class="mod-row r">
-      <div class="mr-num">05</div>
-      <div class="mr-mid">
-        <span class="mr-mod-label">Module — 5</span>
-        <span class="mr-title">SEO & Performance Marketing</span>
-      </div>
-      <div class="mr-topics">
-        <div class="mr-tag">Content Writing & Keyword Research</div>
-        <div class="mr-tag">Meta Tags, Schema, Canonical & Image Optimization</div>
-        <div class="mr-tag">Technical SEO & SEO Audit</div>
-        <div class="mr-tag">Link Building & Local SEO</div>
-        <div class="mr-tag">Web Analytics (Search Console, Analytics, Tag Manager)</div>
-        <div class="mr-tag">SEMRUSH Certification</div>
+    <div class="stack-card" style="z-index:3">
+      <div class="sc-num">03</div>
+      <div class="sc-tag">Module — 03</div>
+      <div class="sc-title">Social Media Management</div>
+      <div class="sc-desc">Learn algorithm-aware content planning and paid campaign management across the Meta suite.</div>
+      <div class="sc-preview"><span class="sp-dot">Meta Ads</span><span class="sp-dot">Content Plan</span></div>
+      <div class="sc-decor">SOCIAL</div>
+      <div class="sc-topics">
+        <div class="st-tag">Meta Business Suite</div>
+        <div class="st-tag">Algorithm Mastery</div>
+        <div class="st-tag">Content Planning</div>
+        <div class="st-tag">Engagement Strategy</div>
       </div>
     </div>
 
-    <div class="mod-row r">
-      <div class="mr-num">06</div>
-      <div class="mr-mid">
-        <span class="mr-mod-label">Module — 6</span>
-        <span class="mr-title">Google Ads</span>
-      </div>
-      <div class="mr-topics">
-        <div class="mr-tag">Search / PPC Campaign Setup</div>
-        <div class="mr-tag">Keyword Planner & Display Ads</div>
-        <div class="mr-tag">YouTube / Video Ads Setup</div>
-        <div class="mr-tag">Google Merchant Centre & Shopping Ads</div>
-        <div class="mr-tag">Remarketing Campaigns & Conversion Tracking</div>
+    <div class="stack-card" style="z-index:4">
+      <div class="sc-num">04</div>
+      <div class="sc-tag">Module — 04</div>
+      <div class="sc-title">Website Development</div>
+      <div class="sc-desc">Build high-converting static websites and master the principles of performance and UX.</div>
+      <div class="sc-preview"><span class="sp-dot">WordPress</span><span class="sp-dot">Landing Pages</span><span class="sp-dot">Elementor</span></div>
+      <div class="sc-decor">WEBDEV</div>
+      <div class="sc-topics">
+        <div class="st-tag">HTML, CSS & JavaScript</div>
+        <div class="st-tag">WordPress & Elementor</div>
+        <div class="st-tag">Domain & Hosting</div>
+        <div class="st-tag">Conversion Rate Opt.</div>
       </div>
     </div>
 
-    <div class="mod-row r">
-      <div class="mr-num">07</div>
-      <div class="mr-mid">
-        <span class="mr-mod-label">Module — 7</span>
-        <span class="mr-title">CRM & Automations</span>
+    <div class="stack-card" style="z-index:5">
+      <div class="sc-num">05</div>
+      <div class="sc-tag">Module — 05</div>
+      <div class="sc-title">SEO & Performance Marketing</div>
+      <div class="sc-desc">Rank higher on search engines and optimize your conversion rates using professional toolkits.</div>
+      <div class="sc-preview"><span class="sp-dot">SEMRush</span><span class="sp-dot">Keywords</span><span class="sp-dot">Indexing</span></div>
+      <div class="sc-decor">SEO</div>
+      <div class="sc-topics">
+        <div class="st-tag">Technical SEO</div>
+        <div class="st-tag">On-Page Strategy</div>
+        <div class="st-tag">Analytics Masterclass</div>
+        <div class="st-tag">SEMRush Deep Dive</div>
       </div>
-      <div class="mr-topics">
-        <div class="mr-tag">Intro to CRM Systems</div>
-        <div class="mr-tag">Lead Nurturing & Management</div>
-        <div class="mr-tag">Lead Form to Google Sheet Integration</div>
-        <div class="mr-tag">Email Marketing Automation</div>
-        <div class="mr-tag">Social Media & Chatbot Automation</div>
+    </div>
+
+    <div class="stack-card" style="z-index:6">
+      <div class="sc-num">06</div>
+      <div class="sc-tag">Module — 06</div>
+      <div class="sc-title">Google Ads (PPC)</div>
+      <div class="sc-desc">Drive targeted traffic and dominate search result pages with high-intent PPC campaigns.</div>
+      <div class="sc-preview"><span class="sp-dot">Search PPC</span><span class="sp-dot">Display Ads</span></div>
+      <div class="sc-decor">GOOGLE</div>
+      <div class="sc-topics">
+        <div class="st-tag">PPC & Keyword Planner</div>
+        <div class="st-tag">YouTube Ads</div>
+        <div class="st-tag">Google Shopping</div>
+        <div class="st-tag">Remarketing Strategy</div>
+      </div>
+    </div>
+
+    <div class="stack-card" style="z-index:7">
+      <div class="sc-num">07</div>
+      <div class="sc-tag">Module — 07</div>
+      <div class="sc-title">CRM & Automations</div>
+      <div class="sc-desc">Connect every part of your marketing funnel with automated workflows and lead nurturing triggers.</div>
+      <div class="sc-preview"><span class="sp-dot">Zapier</span><span class="sp-dot">Email Flows</span><span class="sp-dot">CRM</span></div>
+      <div class="sc-decor">AUTO</div>
+      <div class="sc-topics">
+        <div class="st-tag">Lead Nurturing Systems</div>
+        <div class="st-tag">Email Automations</div>
+        <div class="st-tag">Chatbot Integration</div>
+        <div class="st-tag">Zapier / Make Workflows</div>
       </div>
     </div>
 
   </div>
 </section>
 
-<!-- SPECIALIZATION -->
-<section class="spec" id="specialization">
-  <div class="spec-top">
-    <div>
-      <div class="spec-ey r">Advanced Track</div>
-      <h2 class="spec-h2 r">Specialization<br>in <em>Business</em><br><em>& Marketing</em></h2>
-    </div>
-    <p class="spec-sub r">Two expert-level modules that take your skills from practitioner to specialist level.</p>
-  </div>
+<!-- ═══════ SPECIALIZATION ═══════ -->
+<div class="spec-intro rv">
+  <span class="spec-ey">Advanced Specialization</span>
+  <h2 class="spec-h2">The <em>Expert</em> Track</h2>
+</div>
 
-  <div class="spec-grid">
-    <div class="spec-card r">
+<section class="curriculum" style="background:var(--black);padding-top:0">
+  <div class="stack-container" style="padding-top:60px">
+
+    <div class="stack-card spec-card" style="z-index:8">
       <div class="sc-num">08</div>
-      <div class="sc-ey">Module — 8</div>
+      <div class="sc-tag">Module — 08</div>
       <div class="sc-title">Ecommerce Management</div>
-      <ul class="sc-list">
-        <li>Intro to Ecommerce Platforms</li>
-        <li>Product Listing & Catalogue Management</li>
-        <li>Store Setup & Optimization</li>
-        <li>Order Management & Analytics</li>
-        <li>Ad-driven Ecommerce Growth</li>
-      </ul>
+      <div class="sc-desc">Setup and scale your online store with professional logistics, catalogues, and analytics.</div>
+      <div class="sc-preview"><span class="sp-dot">Shopify</span><span class="sp-dot">Dropshipping</span></div>
+      <div class="sc-decor">ECOM</div>
+      <div class="sc-topics">
+        <div class="st-tag">Ecommerce Platforms</div>
+        <div class="st-tag">Inventory & Logistics</div>
+        <div class="st-tag">Payment Gateways</div>
+        <div class="st-tag">Scale & Growth</div>
+      </div>
     </div>
-    <div class="spec-card r">
+
+    <div class="stack-card spec-card" style="z-index:9">
       <div class="sc-num">09</div>
-      <div class="sc-ey">Module — 9</div>
+      <div class="sc-tag">Module — 09</div>
       <div class="sc-title">No-Code Development</div>
-      <ul class="sc-list">
-        <li>Intro to No-Code Ecosystem</li>
-        <li>Building Apps Without Code</li>
-        <li>Workflow Automation Tools</li>
-        <li>Database & Form Integration</li>
-        <li>Publish & Deploy Projects</li>
-      </ul>
+      <div class="sc-desc">Build functional web apps and complex database integrations without writing a single line of code.</div>
+      <div class="sc-preview"><span class="sp-dot">Bubble.io</span><span class="sp-dot">Airtable</span></div>
+      <div class="sc-decor">NOCODE</div>
+      <div class="sc-topics">
+        <div class="st-tag">No-Code Ecosystem</div>
+        <div class="st-tag">App Building Basics</div>
+        <div class="st-tag">Database Management</div>
+        <div class="st-tag">Cloud Deployment</div>
+      </div>
     </div>
+
   </div>
 </section>
 
-<!-- FAQ -->
-<section class="faq" id="faq">
-  <div class="faq-head r">
-    <div class="faq-h">F.<span>A</span>.Qs</div>
-  </div>
+<!-- ═══════ FAQ ═══════ -->
+<section class="faq">
+  <div class="faq-head rv"><h2 class="faq-h">F.<span>A</span>.Qs</h2></div>
   <div class="faq-wrap">
-    <div class="faq-item r">
-      <div class="faq-q"><h4>Who is this course ideal for?</h4><div class="faq-icon">+</div></div>
-      <div class="faq-body"><div class="faq-ans">It is perfect for aspiring marketers, entrepreneurs, content creators, and anyone who wants to master digital marketing while running a real business.</div></div>
-    </div>
-    <div class="faq-item r">
-      <div class="faq-q"><h4>What are the core skills taught?</h4><div class="faq-icon">+</div></div>
-      <div class="faq-body"><div class="faq-ans">The curriculum covers a complete mix of Business Fundamentals, AI Tools, Social Media, Website Development, SEO, Google Ads, CRM, Ecommerce and No-Code Development.</div></div>
-    </div>
-    <div class="faq-item r">
-      <div class="faq-q"><h4>Is prior experience required?</h4><div class="faq-icon">+</div></div>
-      <div class="faq-body"><div class="faq-ans">No. The training starts from the basics, making it suitable for complete beginners as well as professionals looking to upskill.</div></div>
-    </div>
-    <div class="faq-item r">
-      <div class="faq-q"><h4>Are AI tools included?</h4><div class="faq-icon">+</div></div>
-      <div class="faq-body"><div class="faq-ans">Yes. The course teaches how to use Generative AI — from content creation and design to workflow automation and AI agents.</div></div>
-    </div>
-    <div class="faq-item r">
-      <div class="faq-q"><h4>What is the final outcome?</h4><div class="faq-icon">+</div></div>
-      <div class="faq-body"><div class="faq-ans">By the end of 5 months, students will have hands-on experience running campaigns, building websites, and a portfolio ready for job applications or launching their own business.</div></div>
-    </div>
-    <div class="faq-item r">
-      <div class="faq-q"><h4>What certifications are included?</h4><div class="faq-icon">+</div></div>
-      <div class="faq-body"><div class="faq-ans">The course includes SEMRUSH Certification preparation as part of the SEO module, along with a BraandSchool completion certificate.</div></div>
-    </div>
+    <div class="faq-item rv"><div class="faq-q"><h4>Who is this course for?</h4><div class="faq-icon">+</div></div><div class="faq-ans">Ideal for entrepreneurs, career changers, and aspiring marketers looking for hands-on, practical business training.</div></div>
+    <div class="faq-item rv"><div class="faq-q"><h4>What is the duration?</h4><div class="faq-icon">+</div></div><div class="faq-ans">It's a 5-month intensive program, with sessions held 5 days a week to ensure deep learning and practice.</div></div>
+    <div class="faq-item rv"><div class="faq-q"><h4>Is there placement support?</h4><div class="faq-icon">+</div></div><div class="faq-ans">Yes, we provide resume building, portfolio reviews, and connect you with our network of digital agencies and startups.</div></div>
+    <div class="faq-item rv"><div class="faq-q"><h4>Are AI tools included?</h4><div class="faq-icon">+</div></div><div class="faq-ans">Yes. The course teaches how to use Generative AI — from content creation and design to workflow automation and AI agents.</div></div>
+    <div class="faq-item rv"><div class="faq-q"><h4>What is the final outcome?</h4><div class="faq-icon">+</div></div><div class="faq-ans">By the end of 5 months, students will have hands-on experience running campaigns, building websites, and a portfolio ready for job applications or launching their own business.</div></div>
+    <div class="faq-item rv"><div class="faq-q"><h4>What certifications are included?</h4><div class="faq-icon">+</div></div><div class="faq-ans">The course includes SEMRUSH Certification preparation as part of the SEO module, along with a BraandSchool completion certificate.</div></div>
   </div>
 </section>
 
-<!-- FOOTER -->
+<!-- ═══════ FOOTER ═══════ -->
 <footer id="enroll">
-  <div class="ft-big">JOIN</div>
-  <div class="ft-inner">
-    <div class="ft-top">
-      <div class="ft-left">
-        <div class="ft-join r">JOIN</div>
-        <p class="ft-join-sub r">US TODAY</p>
-      </div>
-      <div class="ft-right r">
-        <a href="tel:+919083596000" class="ft-link">📞 &nbsp;+91 90835-96000</a>
-        <a href="https://braandschool.com" class="ft-link">🌐 &nbsp;braandschool.com</a>
-      </div>
-    </div>
-    <div class="ft-divider"></div>
-    <div class="ft-bottom">
-      <p class="ft-addr">2nd Floor, Pradhan Building, Rishi Aurobindo Rd, Hakim Para, Siliguri</p>
-      <p class="ft-copy">© 2025 BraandSchool. All rights reserved.</p>
-    </div>
+  <div class="ft-join rv">LET'S<br>SCALE.</div>
+  <div class="ft-links rv">
+    <a href="tel:+919083596000" class="ft-link">📞 &nbsp;+91 90835-96000</a>
+    <a href="https://braandschool.com" class="ft-link">🌐 &nbsp;braandschool.com</a>
+  </div>
+  <div class="ft-bottom">
+    <span>2nd Floor, Pradhan Building, Rishi Aurobindo Rd, Hakim Para, Siliguri</span>
+    <span>© 2025 BraandSchool. All rights reserved.</span>
   </div>
 </footer>
 
 <script>
-// PRELOADER
-setTimeout(() => document.getElementById('pre').classList.add('gone'), 1400);
+// ── PRELOADER
+setTimeout(() => document.getElementById('pre').classList.add('gone'), 1600);
 
-// CURSOR
-const cDot = document.getElementById('cDot');
-const cRing = document.getElementById('cRing');
+// ── CURSOR
+const cDot = document.getElementById('cDot'), cRing = document.getElementById('cRing');
 let mx=0,my=0,rx=0,ry=0;
 document.addEventListener('mousemove', e => { mx=e.clientX; my=e.clientY; });
 (function loop(){
@@ -562,80 +455,51 @@ document.addEventListener('mousemove', e => { mx=e.clientX; my=e.clientY; });
   cRing.style.left = rx+'px'; cRing.style.top = ry+'px';
   requestAnimationFrame(loop);
 })();
-document.querySelectorAll('a,button,.faq-q,.nr a').forEach(el => {
+document.querySelectorAll('a,button,.faq-q,.stack-card').forEach(el => {
   el.addEventListener('mouseenter', () => cRing.classList.add('big'));
   el.addEventListener('mouseleave', () => cRing.classList.remove('big'));
 });
 
-// REVEAL
+// ── REVEAL ON SCROLL
 const obs = new IntersectionObserver(entries => {
-  entries.forEach((e,i) => {
-    if(e.isIntersecting){
-      e.target.style.transitionDelay = (e.target.dataset.d||0)+'s';
-      e.target.classList.add('on');
-    }
-  });
-}, { threshold:.1, rootMargin:'0px 0px -30px 0px' });
-document.querySelectorAll('.r,.r2').forEach((el,i) => {
-  // stagger siblings
-  const siblings = el.parentElement.querySelectorAll('.r,.r2');
-  const idx = Array.from(siblings).indexOf(el);
-  el.dataset.d = (idx * 0.07).toFixed(2);
-  obs.observe(el);
-});
+  entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('on'); });
+}, { threshold:.15 });
+document.querySelectorAll('.rv').forEach(el => obs.observe(el));
 
-// FAQ
+// ── TYPEWRITER
+const typeWords = ['Marketing', 'Strategy', 'Automations', 'Growth'];
+const tEl = document.getElementById('typewriter');
+let wIdx=0, cIdx=0, isDel=false;
+function typeLoop(){
+  const word = typeWords[wIdx];
+  if(!isDel){
+    cIdx++;
+    tEl.textContent = word.substring(0, cIdx);
+    if(cIdx >= word.length){ isDel = true; setTimeout(typeLoop, 2000); return; }
+    setTimeout(typeLoop, 150);
+  } else {
+    cIdx--;
+    tEl.textContent = word.substring(0, cIdx);
+    if(cIdx <= 0){ isDel = false; wIdx = (wIdx+1) % typeWords.length; setTimeout(typeLoop, 400); return; }
+    setTimeout(typeLoop, 60);
+  }
+}
+setTimeout(typeLoop, 2200);
+
+// ── FAQ ACCORDION
 document.querySelectorAll('.faq-q').forEach(q => {
   q.addEventListener('click', () => {
-    const item = q.parentElement;
-    const body = item.querySelector('.faq-body');
-    const open = item.classList.contains('open');
-    document.querySelectorAll('.faq-item').forEach(it => {
-      it.classList.remove('open');
-      it.querySelector('.faq-body').style.maxHeight = null;
-    });
-    if(!open){ item.classList.add('open'); body.style.maxHeight = body.scrollHeight+'px'; }
+    const it = q.parentElement;
+    const wasOpen = it.classList.contains('open');
+    document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+    if(!wasOpen) it.classList.add('open');
   });
 });
 
-// NAV shadow on scroll
+// ── NAV SHADOW
 window.addEventListener('scroll', () => {
-  document.querySelector('nav').style.boxShadow = window.scrollY > 20 ? '0 4px 24px rgba(0,0,0,.08)' : 'none';
+  document.querySelector('nav').style.boxShadow = scrollY > 20 ? '0 4px 24px rgba(0,0,0,.08)' : 'none';
 });
-
-// TYPEWRITER
-const typeTarget = document.getElementById('typewriter');
-const words = ['Marketing', 'Strategy', 'Automations', 'Growth'];
-let wordIdx = 0;
-let charIdx = 0;
-let isDeleting = false;
-let typeSpeed = 150;
-
-function typeEffect() {
-  const currentWord = words[wordIdx];
-  const targetHTML = isDeleting 
-    ? currentWord.substring(0, charIdx - 1) 
-    : currentWord.substring(0, charIdx + 1);
-  
-  typeTarget.textContent = targetHTML;
-  
-  if (!isDeleting && charIdx === currentWord.length) {
-    isDeleting = true;
-    typeSpeed = 2000; // pause at end
-  } else if (isDeleting && charIdx === 0) {
-    isDeleting = false;
-    wordIdx = (wordIdx + 1) % words.length;
-    typeSpeed = 500; // pause before start
-  } else {
-    typeSpeed = isDeleting ? 80 : 150;
-    charIdx = isDeleting ? charIdx - 1 : charIdx + 1;
-  }
-  
-  setTimeout(typeEffect, typeSpeed);
-}
-
-// Start typewriter after preloader
-setTimeout(typeEffect, 2000);
 </script>
 </body>
 </html>
