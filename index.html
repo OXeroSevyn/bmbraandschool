@@ -52,10 +52,11 @@ nav{position:fixed;top:0;left:0;right:0;z-index:900;height:64px;display:flex;ali
 
 /* HERO */
 .hero{min-height:100svh;background:var(--black);position:relative;overflow:hidden;padding-top:64px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}
-.hero-bg{position:absolute;inset:0;z-index:0;pointer-events:none}
-.hb-mesh{position:absolute;inset:0;background:radial-gradient(ellipse 80% 70% at 50% 50%,rgba(200,255,0,0.1) 0%,transparent 70%),radial-gradient(ellipse 50% 50% at 10% 20%,rgba(55,0,255,0.08) 0%,transparent 60%)}
-.hb-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.02) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.02) 1px,transparent 1px);background-size:60px 60px}
-.hb-ring{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:600px;height:600px;border:1px solid rgba(200,255,0,.12);border-radius:50%;animation:spin 30s linear infinite}
+.hero-bg{position:absolute;inset:0;z-index:0;pointer-events:none;background:#050505}
+#heroCanvas{position:absolute;inset:0;width:100%;height:100%;opacity:.5}
+.hb-mesh{position:absolute;inset:0;background:radial-gradient(ellipse 80% 70% at 50% 50%,rgba(200,255,0,0.06) 0%,transparent 70%),radial-gradient(ellipse 50% 50% at 10% 20%,rgba(55,0,255,0.1) 0%,transparent 60%)}
+.hb-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.01) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.01) 1px,transparent 1px);background-size:60px 60px}
+.hb-ring{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:600px;height:600px;border:1px solid rgba(200,255,0,.08);border-radius:50%;animation:spin 30s linear infinite}
 @keyframes spin{from{transform:translate(-50%,-50%) rotate(0deg)}to{transform:translate(-50%,-50%) rotate(360deg)}}
 
 .hero-l{max-width:1100px;width:100%;padding:100px 48px;position:relative;z-index:2}
@@ -82,13 +83,24 @@ nav{position:fixed;top:0;left:0;right:0;z-index:900;height:64px;display:flex;ali
 @keyframes tick{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
 
 /* MISSION */
-.mission{background:var(--black);padding:90px 80px;border-bottom:1px solid rgba(255,255,255,.06)}
-.mission-inner{display:flex;align-items:flex-start;gap:80px;max-width:1200px;margin:0 auto}
-.mission-label{font-family:var(--syne);font-size:11px;font-weight:700;letter-spacing:.25em;text-transform:uppercase;color:rgba(255,255,255,.2);padding-top:8px}
-.mission-divider{width:1px;background:rgba(255,255,255,.1);align-self:stretch}
-.mission-text{font-family:var(--syne);font-size:clamp(22px,3.2vw,38px);font-weight:600;line-height:1.45;color:rgba(255,255,255,.55)}
-.mission-text strong{color:var(--white)}
-.mission-text em{color:var(--lime);font-style:normal}
+.mission{background:var(--black);padding:140px 80px;border-bottom:1px solid rgba(255,255,255,.05);position:relative;overflow:hidden}
+.mission-bg{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:400px;height:400px;background:radial-gradient(circle,rgba(200,255,0,0.05) 0%,transparent 70%);filter:blur(60px);z-index:0;pointer-events:none}
+.mission-inner{display:flex;align-items:flex-start;gap:80px;max-width:1200px;margin:0 auto;position:relative;z-index:1}
+.mission-label{font-family:var(--syne);font-size:11px;font-weight:700;letter-spacing:.3em;text-transform:uppercase;color:rgba(255,255,255,.2);padding-top:8px;transition:color .6s}
+.mission.on .mission-label{color:rgba(255,255,255,.6)}
+.mission-divider{width:1px;background:rgba(255,255,255,.05);align-self:stretch;position:relative;min-height:100px}
+.mission-divider::after{content:'';position:absolute;top:0;left:0;width:100%;height:0;background:var(--lime);transition:height 1.2s cubic-bezier(.16,1,.3,1)}
+.mission.on .mission-divider::after{height:100%}
+.mission-text{font-family:var(--body);font-size:clamp(22px,3.8vw,44px);font-weight:400;line-height:1.4;color:rgba(255,255,255,.45);letter-spacing:-0.01em}
+.mission-text em{color:rgba(255,255,255,.9);font-style:normal;transition:all .8s;display:inline-block}
+.mission.on .mission-text em{color:var(--lime);transform:translateY(0);opacity:1}
+.mission-text strong{
+  font-family:var(--head);font-size:1.15em;color:var(--white);display:block;margin-top:20px;
+  text-transform:uppercase;letter-spacing:-0.02em;line-height:.9;
+  filter:brightness(1);transition:all .8s ease;
+  opacity:0;transform:translateY(20px);
+}
+.mission.on .mission-text strong{opacity:1;transform:translateY(0);filter:brightness(1.2);text-shadow:0 0 30px rgba(200,255,0,0.15)}
 
 /* DURATION STRIP */
 .dur-strip{background:var(--white);border-bottom:1px solid var(--border);padding:22px 80px;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
@@ -104,7 +116,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:900;height:64px;display:flex;ali
 .stack-top{padding:0 40px 100px;text-align:center;max-width:1000px;margin:0 auto}
 .cur-label{font-family:var(--syne);font-size:11px;font-weight:700;letter-spacing:.25em;text-transform:uppercase;color:var(--mid);margin-bottom:24px;display:block}
 .cur-h2{font-family:var(--head);font-size:clamp(64px,10vw,160px);line-height:.85;text-transform:uppercase;letter-spacing:-.03em;margin-bottom:8px}
-.cur-h2 em{font-style:normal;display:block;-webkit-text-stroke:2.5px var(--black);color:transparent}
+.cur-h2 em{font-style:normal;display:block;color:var(--lime)}
 .cur-sub{font-family:var(--head);font-size:clamp(28px,4vw,56px);color:var(--mid);text-transform:uppercase;letter-spacing:.02em;margin-bottom:32px;min-height:1.2em}
 .cur-sub .cur-type{color:var(--black)}
 .cur-sub .cur-type-cursor{display:inline-block;width:2px;height:.75em;background:var(--lime);margin-left:2px;vertical-align:middle;animation:blink .8s step-end infinite}
@@ -129,24 +141,42 @@ nav{position:fixed;top:0;left:0;right:0;z-index:900;height:64px;display:flex;ali
   border-radius:24px;
   padding:56px 60px;
   min-height:520px;
-  display:flex;
-  flex-direction:column;
-  box-shadow:0 4px 20px rgba(0,0,0,0.04), 0 20px 60px rgba(0,0,0,0.08);
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  grid-template-rows:auto auto auto 1fr;
+  gap:0 40px;
+  box-shadow:0 2px 8px rgba(0,0,0,0.06);
   cursor:pointer;
   overflow:hidden;
   margin-bottom:60px;
   transition:box-shadow .3s;
 }
 .stack-card:hover{
-  box-shadow:0 4px 20px rgba(0,0,0,0.06), 0 30px 80px rgba(0,0,0,0.12);
+  box-shadow:0 4px 16px rgba(0,0,0,0.1);
 }
 
 .sc-num{position:absolute;right:48px;top:32px;font-family:var(--head);font-size:clamp(80px,12vw,160px);color:rgba(0,0,0,.04);line-height:1;z-index:0;pointer-events:none}
-.sc-tag{font-family:var(--syne);font-size:11px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--mid);margin-bottom:16px;position:relative;z-index:2}
-.sc-title{font-family:var(--syne);font-size:clamp(26px,3.5vw,52px);font-weight:800;line-height:1.1;color:var(--black);margin-bottom:16px;position:relative;z-index:2;max-width:75%}
-.sc-desc{font-size:clamp(15px,1.1vw,18px);color:rgba(0,0,0,.5);line-height:1.65;margin-bottom:32px;position:relative;z-index:2;max-width:560px}
-.sc-preview{display:flex;flex-wrap:wrap;gap:10px;position:relative;z-index:2}
+.sc-tag{font-family:var(--syne);font-size:11px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--mid);margin-bottom:16px;position:relative;z-index:2;grid-column:1}
+.sc-title{font-family:var(--syne);font-size:clamp(26px,3.5vw,52px);font-weight:800;line-height:1.1;color:var(--black);margin-bottom:16px;position:relative;z-index:2;grid-column:1}
+.sc-desc{font-size:clamp(15px,1.1vw,18px);color:rgba(0,0,0,.5);line-height:1.65;margin-bottom:32px;position:relative;z-index:2;grid-column:1}
+.sc-preview{display:flex;flex-wrap:wrap;gap:10px;position:relative;z-index:2;grid-column:1;align-self:end}
 .sp-dot{font-size:13px;font-weight:600;color:rgba(0,0,0,.35);background:rgba(0,0,0,.05);padding:7px 18px;border-radius:100px}
+
+/* Module image */
+.sc-img{
+  grid-column:2;grid-row:1 / -1;
+  align-self:center;justify-self:center;
+  width:100%;max-width:380px;
+  border-radius:16px;
+  overflow:hidden;position:relative;z-index:2;
+}
+.sc-img img{
+  width:100%;height:100%;
+  object-fit:cover;display:block;
+  border-radius:16px;
+  transition:transform .5s cubic-bezier(.16,1,.3,1);
+}
+.stack-card:hover .sc-img img{transform:scale(1.05)}
 
 /* Reveal overlay */
 .sc-topics{position:absolute;inset:0;padding:56px 60px;background:var(--lime);display:grid;grid-template-columns:1fr 1fr;align-content:center;gap:20px;opacity:0;visibility:hidden;transform:translateY(100%);transition:all .5s cubic-bezier(.16,1,.3,1);z-index:10;border-radius:24px}
@@ -157,7 +187,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:900;height:64px;display:flex;ali
 .sc-decor{position:absolute;left:48px;bottom:-30px;font-family:var(--head);font-size:clamp(100px,20vw,240px);color:rgba(0,0,0,.02);text-transform:uppercase;pointer-events:none;z-index:0;line-height:.8}
 
 /* Specialization */
-.stack-card.spec-card{background:var(--black);border-color:rgba(255,255,255,.08)}
+.stack-card.spec-card{background:var(--black);border-color:rgba(200,255,0,.2)}
 .stack-card.spec-card .sc-num{color:rgba(255,255,255,.06)}
 .stack-card.spec-card .sc-tag{color:rgba(255,255,255,.3)}
 .stack-card.spec-card .sc-title{color:var(--white)}
@@ -165,33 +195,187 @@ nav{position:fixed;top:0;left:0;right:0;z-index:900;height:64px;display:flex;ali
 .stack-card.spec-card .sp-dot{background:rgba(255,255,255,.08);color:rgba(255,255,255,.4)}
 .stack-card.spec-card .sc-decor{color:rgba(255,255,255,.03)}
 
+/* ═══ SPECIALIZATION CARD ═══ */
+.spec-divider{
+  grid-template-columns:1fr!important;
+  justify-items:center;
+  text-align:center;
+  position:sticky!important;
+  top:100px;
+  overflow:hidden;
+}
+
+/* Rotating glow border */
+.spec-glow{
+  position:absolute;inset:-2px;border-radius:26px;z-index:0;
+  background:conic-gradient(from var(--glow-angle,0deg),transparent 0%,var(--lime) 10%,transparent 20%,rgba(200,255,0,.3) 40%,transparent 60%,var(--lime) 80%,transparent 100%);
+  animation:glowSpin 4s linear infinite;
+  opacity:.7;
+}
+.spec-glow::after{
+  content:'';position:absolute;inset:2px;border-radius:24px;background:var(--black);
+}
+@property --glow-angle{syntax:'<angle>';initial-value:0deg;inherits:false}
+@keyframes glowSpin{to{--glow-angle:360deg}}
+
+/* Shimmer sweep */
+.spec-shimmer{
+  position:absolute;inset:0;z-index:1;border-radius:24px;overflow:hidden;
+}
+.spec-shimmer::after{
+  content:'';position:absolute;top:0;left:-100%;width:60%;height:100%;
+  background:linear-gradient(105deg,transparent 0%,rgba(200,255,0,.04) 40%,rgba(200,255,0,.1) 50%,rgba(200,255,0,.04) 60%,transparent 100%);
+  animation:shimmerSweep 3s ease-in-out infinite;
+}
+@keyframes shimmerSweep{0%{left:-100%}100%{left:200%}}
+
+/* Floating particles */
+.spec-particles{position:absolute;inset:0;z-index:1;pointer-events:none;overflow:hidden;border-radius:24px}
+.spec-particles span{
+  position:absolute;width:4px;height:4px;background:var(--lime);border-radius:50%;opacity:0;
+  animation:floatUp 4s ease-in-out infinite;
+}
+.spec-particles span:nth-child(1){left:10%;animation-delay:0s;animation-duration:3.5s}
+.spec-particles span:nth-child(2){left:25%;animation-delay:.6s;animation-duration:4.2s}
+.spec-particles span:nth-child(3){left:40%;animation-delay:1.2s;animation-duration:3.8s}
+.spec-particles span:nth-child(4){left:55%;animation-delay:.3s;animation-duration:4.5s}
+.spec-particles span:nth-child(5){left:70%;animation-delay:1.5s;animation-duration:3.2s}
+.spec-particles span:nth-child(6){left:85%;animation-delay:.9s;animation-duration:4s}
+.spec-particles span:nth-child(7){left:15%;animation-delay:2s;animation-duration:3.6s}
+.spec-particles span:nth-child(8){left:60%;animation-delay:1.8s;animation-duration:4.3s}
+@keyframes floatUp{
+  0%{bottom:-10px;opacity:0;transform:scale(0)}
+  20%{opacity:.8;transform:scale(1)}
+  80%{opacity:.4}
+  100%{bottom:100%;opacity:0;transform:scale(.5)}
+}
+
+/* Badge */
+.spec-badge{
+  position:relative;z-index:2;
+  font-family:var(--syne);font-size:12px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--lime);
+  background:rgba(200,255,0,.08);border:1px solid rgba(200,255,0,.2);
+  padding:10px 24px;border-radius:100px;margin-bottom:36px;
+  animation:badgePulse 2.5s ease-in-out infinite;
+}
+@keyframes badgePulse{
+  0%,100%{box-shadow:0 0 0 0 rgba(200,255,0,.2)}
+  50%{box-shadow:0 0 20px 6px rgba(200,255,0,.15)}
+}
+
+/* Title text */
+.spec-divider-title{
+  position:relative;z-index:2;
+  font-family:var(--head);font-size:clamp(28px,4vw,48px);
+  color:rgba(255,255,255,.4);text-transform:uppercase;letter-spacing:.05em;line-height:1;
+  margin-bottom:8px;
+}
+.spec-divider-highlight{
+  position:relative;z-index:2;
+  font-family:var(--head);font-size:clamp(52px,9vw,120px);
+  color:var(--lime);text-transform:uppercase;line-height:.9;letter-spacing:-.02em;
+  text-shadow:0 0 40px rgba(200,255,0,.25);
+  margin-bottom:8px;
+}
+.spec-divider-sub{
+  position:relative;z-index:2;
+  font-family:var(--head);font-size:clamp(28px,4vw,48px);
+  color:var(--white);text-transform:uppercase;letter-spacing:.1em;line-height:1;
+}
+
+/* Expanding line */
+.spec-line{
+  position:relative;z-index:2;
+  width:60px;height:2px;background:var(--lime);margin-top:36px;border-radius:2px;
+  animation:lineExpand 2s ease-in-out infinite alternate;
+}
+@keyframes lineExpand{0%{width:60px;opacity:.5}100%{width:140px;opacity:1}}
+
 .spec-intro{padding:120px 80px 80px;text-align:center;background:var(--black);position:relative;z-index:1}
 .spec-ey{font-family:var(--syne);font-size:11px;font-weight:700;text-transform:uppercase;color:var(--lime);letter-spacing:.2em;margin-bottom:20px;display:block}
 .spec-h2{font-family:var(--head);font-size:clamp(48px,10vw,140px);color:var(--white);text-transform:uppercase;line-height:.9}
 .spec-h2 em{color:var(--lime);font-style:normal}
 
 /* FAQ */
-.faq{background:var(--black);padding:100px 40px}
-.faq-head{text-align:center;margin-bottom:80px}
+.faq{background:var(--black);padding:100px 40px;position:relative;overflow:hidden}
+#faqCanvas{position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0;opacity:0.3}
+.faq-head{text-align:center;margin-bottom:80px;position:relative;z-index:1}
 .faq-h{font-family:var(--head);font-size:clamp(60px,10vw,140px);color:var(--white);text-transform:uppercase}
 .faq-h span{color:var(--lime)}
-.faq-wrap{max-width:900px;margin:0 auto}
+.faq-wrap{max-width:900px;margin:0 auto;position:relative;z-index:1}
 .faq-item{border:1px solid rgba(255,255,255,.08);border-radius:16px;margin-bottom:12px;overflow:hidden;transition:all .3s}
 .faq-item.open{border-color:var(--lime);background:rgba(255,255,255,0.02)}
 .faq-q{padding:28px 36px;display:flex;justify-content:space-between;align-items:center;cursor:pointer}
 .faq-q h4{font-family:var(--syne);font-size:19px;font-weight:700;color:var(--white)}
 .faq-icon{width:32px;height:32px;border:1px solid rgba(255,255,255,0.2);border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--white);transition:all .3s}
 .faq-item.open .faq-icon{background:var(--lime);color:var(--black);border-color:var(--lime);transform:rotate(45deg)}
-.faq-ans{padding:0 36px 28px;color:rgba(255,255,255,.5);line-height:1.7;max-height:0;overflow:hidden;transition:max-height .4s ease}
-.faq-item.open .faq-ans{max-height:200px}
+.faq-ans{padding:0 36px;color:rgba(255,255,255,.5);line-height:1.7;max-height:0;overflow:hidden;transition:all .4s ease;opacity:0;visibility:hidden}
+.faq-item.open .faq-ans{max-height:300px;padding:0 36px 28px;opacity:1;visibility:visible}
 
 /* FOOTER */
-footer{background:var(--lime);padding:120px 80px 60px;position:relative;overflow:hidden}
-.ft-join{font-family:var(--head);font-size:clamp(80px,15vw,220px);line-height:.8;color:var(--black);margin-bottom:60px}
-.ft-links{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:80px}
-.ft-link{text-decoration:none;font-family:var(--syne);font-weight:800;color:var(--black);padding:16px 32px;border-radius:100px;border:2px solid rgba(0,0,0,0.15);transition:all .3s}
-.ft-link:hover{background:var(--black);color:var(--lime);border-color:var(--black);transform:translateY(-4px)}
-.ft-bottom{display:flex;justify-content:space-between;padding-top:40px;border-top:1px solid rgba(0,0,0,0.1);font-size:13px;font-weight:600}
+footer{background:var(--lime);padding:140px 80px 100px;position:relative;overflow:hidden;cursor:crosshair}
+#flickerCanvas{position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:1;opacity:0.45}
+.ft-lens{position:absolute;width:550px;height:550px;background:radial-gradient(circle,rgba(0,0,0,0.1) 0%,transparent 70%);border-radius:50%;pointer-events:none;z-index:2;transform:translate(-50%,-50%);filter:blur(30px);transition:transform 0.15s cubic-bezier(0.16, 1, 0.3, 1)}
+.ft-ticker-bg{position:absolute;top:28%;left:0;width:100%;font-family:var(--head);font-size:180px;color:rgba(0,0,0,0.03);white-space:nowrap;pointer-events:none;z-index:0;user-select:none;animation:ftTick 50s linear infinite;filter:blur(2px)}
+@keyframes ftTick{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+.ft-main-grid{display:flex;gap:80px;justify-content:center;align-items:center;position:relative;z-index:2;max-width:1400px;margin:0 auto}
+.ft-left{flex:0 1 auto}
+.ft-right{position:relative;height:420px;width:420px;flex:0 0 420px;display:flex;align-items:center;justify-content:center}
+.orbit-path{pointer-events:none;position:absolute;inset:0;width:100%;height:100%}
+.orbit-path circle{stroke:var(--black);stroke-width:1.5;fill:none}
+.orbit-path circle:nth-child(1){stroke-opacity:0.35}
+.orbit-path circle:nth-child(2){stroke-opacity:0.25;stroke-dasharray:4 4}
+.orbit-path circle:nth-child(3){stroke-opacity:0.18;stroke-dasharray:3 3}
+.orbit-icon{
+  position:absolute;width:var(--size, 54px);height:var(--size, 54px);
+  background:var(--black);border-radius:50%;display:flex;align-items:center;justify-content:center;
+  color:var(--lime);box-shadow:0 8px 24px rgba(0,0,0,0.15);border:1.5px solid rgba(255,255,255,0.1);
+  animation:orbit var(--duration) linear infinite;
+  z-index:3;transition:transform .3s cubic-bezier(.16,1,.3,1);
+}
+.orbit-icon svg{width:45%;height:45%}
+@keyframes orbit {
+  0% { transform: rotate(calc(var(--angle) * 1deg)) translateY(calc(var(--radius) * 1px)) rotate(calc(var(--angle) * -1deg)); }
+  100% { transform: rotate(calc(var(--angle) * 1deg + 360deg)) translateY(calc(var(--radius) * 1px)) rotate(calc((var(--angle) * -1deg) - 360deg)); }
+}
+.ft-join{
+  font-family:var(--head);font-size:clamp(60px,12vw,160px);line-height:.82;color:var(--black);
+  margin-bottom:60px;position:relative;z-index:2;display:flex;flex-wrap:wrap;gap:0 12px;
+  letter-spacing:-0.03em;
+}
+.ft-join span{display:inline-block;opacity:0;transform:translateY(30px);transition:all .9s cubic-bezier(.16,1,.3,1)}
+.footer.on .ft-join span{opacity:1;transform:translateY(0)}
+.ft-join span:nth-child(n){transition-delay:calc(0.04s * var(--i, 1))}
+
+.ft-links{display:flex;gap:24px;flex-wrap:wrap;margin-bottom:0;position:relative;z-index:3}
+.ft-link{
+  text-decoration:none;font-family:var(--syne);color:var(--white);
+  width:220px;height:80px;
+  background:var(--black);transition:all .4s cubic-bezier(.16,1,.3,1);
+  display:flex;flex-direction:column;justify-content:center;padding:0 28px;
+  position:relative;overflow:hidden;border:1px solid rgba(255,255,255,0.1);
+  border-radius:8px;box-shadow:0 10px 30px rgba(0,0,0,0.1);
+}
+.ft-link .m-inner{position:relative;z-index:2;display:flex;flex-direction:column;gap:4px}
+.ft-link .m-label{font-weight:800;font-size:12px;letter-spacing:0.1em;text-transform:uppercase;color:var(--lime)}
+.ft-link .m-data{font-weight:700;font-size:10px;opacity:0.5;letter-spacing:0.05em;transition:all .4s}
+.ft-link:hover .m-data{opacity:1;transform:translateY(-2px);color:var(--white)}
+.ft-link::after{
+  content:'';position:absolute;top:0;left:0;width:100%;height:100%;
+  background:linear-gradient(45deg, transparent, rgba(200,255,0,0.05), transparent);
+  transform:translateX(-100%);transition:transform .6s;
+}
+.ft-link:hover::after{transform:translateX(100%)}
+.ft-link:hover{transform:scale(1.05) translateY(-8px);border-color:var(--lime);box-shadow:0 20px 40px rgba(0,0,0,0.2)}
+
+.ft-bottom{
+  display:flex;justify-content:space-between;padding-top:45px;margin-top:80px;
+  border-top:1px solid rgba(0,0,0,0.06);font-size:12px;font-weight:700;
+  color:rgba(0,0,0,0.45);position:relative;z-index:2;font-family:var(--syne);
+  letter-spacing:0.02em;
+}
 
 /* REVEAL */
 .rv{opacity:0;transform:translateY(30px);transition:all .8s cubic-bezier(.16,1,.3,1)}
@@ -207,13 +391,16 @@ footer{background:var(--lime);padding:120px 80px 60px;position:relative;overflow
   .stack-top{padding:0 24px 60px}
   .cur-head{grid-template-columns:1fr}
   .stack-container{padding:0 20px 100px}
-  .stack-card{padding:32px;min-height:420px;top:70px;margin-bottom:40px;border-radius:20px}
+  .stack-card{padding:32px;min-height:420px;top:70px;margin-bottom:40px;border-radius:20px;grid-template-columns:1fr}
+  .sc-img{display:none}
   .sc-num{font-size:80px;right:20px;top:20px}
   .sc-topics{grid-template-columns:1fr;padding:32px;border-radius:20px}
   .spec-intro{padding:80px 24px 60px}
   .faq{padding:60px 24px}
   footer{padding:80px 24px 40px}
-  .ft-bottom{flex-direction:column;gap:8px}
+  .ft-main-grid{grid-template-columns:1fr;gap:40px}
+  .ft-right{height:300px;order:-1}
+  .ft-bottom{flex-direction:column;gap:8px;margin-top:40px}
   .h-stats{grid-template-columns:1fr 1fr}
 }
 @media(pointer:coarse){.c-dot,.c-ring{display:none}body{cursor:auto}}
@@ -230,7 +417,7 @@ footer{background:var(--lime);padding:120px 80px 60px;position:relative;overflow
 </nav>
 
 <section class="hero">
-  <div class="hero-bg"><div class="hb-mesh"></div><div class="hb-grid"></div><div class="hb-ring"></div></div>
+  <div class="hero-bg"><canvas id="heroCanvas"></canvas><div class="hb-mesh"></div><div class="hb-grid"></div><div class="hb-ring"></div></div>
   <div class="hero-l">
     <div class="h-badge rv"><span class="h-dot"></span>Braand School — Siliguri</div>
     <div class="h-main-text">
@@ -257,7 +444,14 @@ footer{background:var(--lime);padding:120px 80px 60px;position:relative;overflow
   <span class="ticker-item">SEO <span class="tsep"></span></span><span class="ticker-item">GOOGLE ADS <span class="tsep"></span></span><span class="ticker-item">SOCIAL MEDIA <span class="tsep"></span></span>
 </div></div>
 
-<div class="mission rv"><div class="mission-inner"><div class="mission-label">Our Philosophy</div><div class="mission-divider"></div><p class="mission-text">We believe in learning by doing. <em>You won't just be reading</em> about Digital Marketing — you'll be running <strong>Your Own Online Business.</strong></p></div></div>
+<div class="mission rv">
+  <div class="mission-bg"></div>
+  <div class="mission-inner">
+    <div class="mission-label">Our Philosophy</div>
+    <div class="mission-divider"></div>
+    <p class="mission-text">We believe in learning by doing. <em>You won't just be reading</em> about Digital Marketing — you'll be running <strong>Your Own Online Business.</strong></p>
+  </div>
+</div>
 
 <div class="dur-strip rv"><span class="dur-lbl">Course Duration</span><span class="dur-dot"></span><span class="dur-val">5 months &nbsp;·&nbsp; 5 days a week</span><span class="dur-chip">Batches Running</span></div>
 
@@ -283,12 +477,17 @@ footer{background:var(--lime);padding:120px 80px 60px;position:relative;overflow
       <div class="sc-title">Marketing & Business Fundamentals</div>
       <div class="sc-desc">Master the core concepts of marketing strategy, competitor research, and branding from the ground up.</div>
       <div class="sc-preview"><span class="sp-dot">Strategy</span><span class="sp-dot">Competitor Audit</span><span class="sp-dot">USP</span></div>
+      <div class="sc-img"><img src="images/module-01.png" alt="Marketing Fundamentals" loading="lazy"></div>
       <div class="sc-decor">STRATEGY</div>
       <div class="sc-topics">
-        <div class="st-tag">Planning your Business</div>
+        <div class="st-tag">Fundamentals of Marketing</div>
         <div class="st-tag">Competitor Research</div>
         <div class="st-tag">AIDA Framework</div>
         <div class="st-tag">5 Ps of Marketing</div>
+        <div class="st-tag">Local Market Research, Audit & Presentation</div>
+        <div class="st-tag">Finding a Niche & Planning your brand</div>
+        <div class="st-tag">Finalize Brand Name</div>
+        <div class="st-tag">Brand Identity & Brand Voice</div>
       </div>
     </div>
 
@@ -298,11 +497,19 @@ footer{background:var(--lime);padding:120px 80px 60px;position:relative;overflow
       <div class="sc-title">Gen AI & Design Tools</div>
       <div class="sc-desc">Accelerate your workflow with generative AI for content, graphics, and automation.</div>
       <div class="sc-preview"><span class="sp-dot">AI Tools</span><span class="sp-dot">Visual Design</span></div>
+      <div class="sc-img"><img src="images/module-02.png" alt="Gen AI & Design Tools" loading="lazy"></div>
       <div class="sc-decor">AI / GD</div>
       <div class="sc-topics">
+        <div class="st-tag">Fundamentals & History of AI</div>
+        <div class="st-tag">Intro to LLMs</div>
+        <div class="st-tag">Prompt Engineering Basics</div>
+        <div class="st-tag">Generative Text: Setting up Tone, Writing Styles</div>
+        <div class="st-tag">Generative Image: InPainting, Outpainting</div>
+        <div class="st-tag">Generative Video: Text to Video, Image to Video</div>
+        <div class="st-tag">Generative Audio: Sound Effects & Music</div>
+        <div class="st-tag">Gen in Content Creation</div>
         <div class="st-tag">Canva & Adobe Firefly</div>
-        <div class="st-tag">Generative AI Automations</div>
-        <div class="st-tag">AI Agents & Workflows</div>
+        <div class="st-tag">AI Agents to Automate Tasks</div>
       </div>
     </div>
 
@@ -312,12 +519,18 @@ footer{background:var(--lime);padding:120px 80px 60px;position:relative;overflow
       <div class="sc-title">Social Media Management</div>
       <div class="sc-desc">Learn algorithm-aware content planning and paid campaign management across the Meta suite.</div>
       <div class="sc-preview"><span class="sp-dot">Meta Ads</span><span class="sp-dot">Content Plan</span></div>
+      <div class="sc-img"><img src="images/module-03.png" alt="Social Media Management" loading="lazy"></div>
       <div class="sc-decor">SOCIAL</div>
       <div class="sc-topics">
-        <div class="st-tag">Meta Business Suite</div>
-        <div class="st-tag">Algorithm Mastery</div>
-        <div class="st-tag">Content Planning</div>
-        <div class="st-tag">Engagement Strategy</div>
+        <div class="st-tag">Understanding Social Media Algorithms</div>
+        <div class="st-tag">Setting up Social Media accounts</div>
+        <div class="st-tag">Meta Business Suite Setup(Facebook & Instagram)</div>
+        <div class="st-tag">Managing Multiple Social Media Platforms (Pinterest, X, Linkedin)</div>
+        <div class="st-tag">Content Planner</div>
+        <div class="st-tag">Copywriting</div>
+        <div class="st-tag">Social Media Automations</div>
+        <div class="st-tag">Ads Manager Setup</div>
+        <div class="st-tag">Campaign Setup: Awareness, Leads, Engagement, Sales.</div>
       </div>
     </div>
 
@@ -327,12 +540,17 @@ footer{background:var(--lime);padding:120px 80px 60px;position:relative;overflow
       <div class="sc-title">Website Development</div>
       <div class="sc-desc">Build high-converting static websites and master the principles of performance and UX.</div>
       <div class="sc-preview"><span class="sp-dot">WordPress</span><span class="sp-dot">Landing Pages</span><span class="sp-dot">Elementor</span></div>
+      <div class="sc-img"><img src="images/module-04.png" alt="Website Development" loading="lazy"></div>
       <div class="sc-decor">WEBDEV</div>
       <div class="sc-topics">
-        <div class="st-tag">HTML, CSS & JavaScript</div>
-        <div class="st-tag">WordPress & Elementor</div>
-        <div class="st-tag">Domain & Hosting</div>
-        <div class="st-tag">Conversion Rate Opt.</div>
+        <div class="st-tag">Basics of HTML, CSS & JavaScript</div>
+        <div class="st-tag">Static Website creation</div>
+        <div class="st-tag">Intro to Domain & Hosting</div>
+        <div class="st-tag">Intro to wordpress websites</div>
+        <div class="st-tag">Elementor website builder</div>
+        <div class="st-tag">Usage of plugins</div>
+        <div class="st-tag">Speed & Security optimizations</div>
+        <div class="st-tag">Build your own website</div>
       </div>
     </div>
 
@@ -342,12 +560,19 @@ footer{background:var(--lime);padding:120px 80px 60px;position:relative;overflow
       <div class="sc-title">SEO & Performance Marketing</div>
       <div class="sc-desc">Rank higher on search engines and optimize your conversion rates using professional toolkits.</div>
       <div class="sc-preview"><span class="sp-dot">SEMRush</span><span class="sp-dot">Keywords</span><span class="sp-dot">Indexing</span></div>
+      <div class="sc-img"><img src="images/module-05.png" alt="SEO & Performance Marketing" loading="lazy"></div>
       <div class="sc-decor">SEO</div>
       <div class="sc-topics">
-        <div class="st-tag">Technical SEO</div>
-        <div class="st-tag">On-Page Strategy</div>
-        <div class="st-tag">Analytics Masterclass</div>
-        <div class="st-tag">SEMRush Deep Dive</div>
+        <div class="st-tag">Keyword Research & Search Intent</div>
+        <div class="st-tag">Content Writing, Blogging & Adsense</div>
+        <div class="st-tag">On-Page SEO — Meta Tags, Schema & Image Optimisation</div>
+        <div class="st-tag">Technical SEO — Robots.txt, Sitemap & Site Health</div>
+        <div class="st-tag">SEO Audit & Performance Review</div>
+        <div class="st-tag">Link Building Strategies</div>
+        <div class="st-tag">Google My Business & Local SEO</div>
+        <div class="st-tag">UTM Parameters & Conversion Tracking</div>
+        <div class="st-tag">Google Analytics, Search Console & Tag Manager</div>
+        <div class="st-tag">Heatmaps & User Behaviour Analysis</div>
       </div>
     </div>
 
@@ -357,12 +582,19 @@ footer{background:var(--lime);padding:120px 80px 60px;position:relative;overflow
       <div class="sc-title">Google Ads (PPC)</div>
       <div class="sc-desc">Drive targeted traffic and dominate search result pages with high-intent PPC campaigns.</div>
       <div class="sc-preview"><span class="sp-dot">Search PPC</span><span class="sp-dot">Display Ads</span></div>
+      <div class="sc-img"><img src="images/module-06.png" alt="Google Ads PPC" loading="lazy"></div>
       <div class="sc-decor">GOOGLE</div>
       <div class="sc-topics">
-        <div class="st-tag">PPC & Keyword Planner</div>
-        <div class="st-tag">YouTube Ads</div>
-        <div class="st-tag">Google Shopping</div>
-        <div class="st-tag">Remarketing Strategy</div>
+        <div class="st-tag">Setting Up & Navigating Your Google Ads Account</div>
+        <div class="st-tag">Keyword Research & Google Keyword Planner</div>
+        <div class="st-tag">Landing Page Setup & Optimisation</div>
+        <div class="st-tag">PPC Campaign Setup : Match types Bidding</div>
+        <div class="st-tag">Display Ads Setup & Audience Targeting</div>
+        <div class="st-tag">Youtube/Video ads setup</div>
+        <div class="st-tag">Google Merchant Centre & Shopping Ads</div>
+        <div class="st-tag">Remarketing Campaigns & Audience Lists</div>
+        <div class="st-tag">Conversion Rate Optimization</div>
+        <div class="st-tag">Conversion Tracking & Performance Analysis</div>
       </div>
     </div>
 
@@ -372,54 +604,74 @@ footer{background:var(--lime);padding:120px 80px 60px;position:relative;overflow
       <div class="sc-title">CRM & Automations</div>
       <div class="sc-desc">Connect every part of your marketing funnel with automated workflows and lead nurturing triggers.</div>
       <div class="sc-preview"><span class="sp-dot">Zapier</span><span class="sp-dot">Email Flows</span><span class="sp-dot">CRM</span></div>
+      <div class="sc-img"><img src="images/module-07.png" alt="CRM & Automations" loading="lazy"></div>
       <div class="sc-decor">AUTO</div>
       <div class="sc-topics">
-        <div class="st-tag">Lead Nurturing Systems</div>
-        <div class="st-tag">Email Automations</div>
-        <div class="st-tag">Chatbot Integration</div>
-        <div class="st-tag">Zapier / Make Workflows</div>
+        <div class="st-tag">Planning & Managing Performance Marketing Campaigns</div>
+        <div class="st-tag">Setting up CRM & Automation Platforms</div>
+        <div class="st-tag">Lead Nurturing & Management</div>
+        <div class="st-tag">Lead Integration with Google Sheets & CRM</div>
+        <div class="st-tag">Drip Campaigns & Email Marketing Automation</div>
+        <div class="st-tag">Social Media & Chatbot Automations</div>
+        <div class="st-tag">Building a Full Automated Marketing Funnel</div>
       </div>
     </div>
 
-  </div>
-</section>
+    <div class="stack-card spec-card spec-divider" style="z-index:8">
+      <!-- Animated glow border -->
+      <div class="spec-glow"></div>
+      <!-- Shimmer sweep -->
+      <div class="spec-shimmer"></div>
+      <!-- Floating particles -->
+      <div class="spec-particles">
+        <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+      </div>
+      <!-- Content -->
+      <div class="spec-badge">★ ADVANCED TRACK</div>
+      <div class="spec-divider-title">Specialization in</div>
+      <h2 class="spec-divider-highlight">Business &<br>Marketing</h2>
+      <div class="spec-divider-sub">Course</div>
+      <div class="spec-line"></div>
+    </div>
 
-<!-- ═══════ SPECIALIZATION ═══════ -->
-<div class="spec-intro rv">
-  <span class="spec-ey">Advanced Specialization</span>
-  <h2 class="spec-h2">The <em>Expert</em> Track</h2>
-</div>
-
-<section class="curriculum" style="background:var(--black);padding-top:0">
-  <div class="stack-container" style="padding-top:60px">
-
-    <div class="stack-card spec-card" style="z-index:8">
+    <div class="stack-card" style="z-index:9">
       <div class="sc-num">08</div>
       <div class="sc-tag">Module — 08</div>
       <div class="sc-title">Ecommerce Management</div>
       <div class="sc-desc">Setup and scale your online store with professional logistics, catalogues, and analytics.</div>
       <div class="sc-preview"><span class="sp-dot">Shopify</span><span class="sp-dot">Dropshipping</span></div>
+      <div class="sc-img"><img src="images/module-08.png" alt="Ecommerce Management" loading="lazy"></div>
       <div class="sc-decor">ECOM</div>
       <div class="sc-topics">
-        <div class="st-tag">Ecommerce Platforms</div>
-        <div class="st-tag">Inventory & Logistics</div>
-        <div class="st-tag">Payment Gateways</div>
-        <div class="st-tag">Scale & Growth</div>
+        <div class="st-tag">Business Documentation & Registrations</div>
+        <div class="st-tag">Woo-Commerce Website Setup</div>
+        <div class="st-tag">Shopify Website Setup</div>
+        <div class="st-tag">Shipping & Delivery Management</div>
+        <div class="st-tag">Payment Gateway Setup</div>
+        <div class="st-tag">Amazon Seller Central: Setup, Listing & SEO</div>
+        <div class="st-tag">Google Merchant Centre Setup</div>
+        <div class="st-tag">Meta Commerce Manager</div>
       </div>
     </div>
 
-    <div class="stack-card spec-card" style="z-index:9">
+    <div class="stack-card" style="z-index:10">
       <div class="sc-num">09</div>
       <div class="sc-tag">Module — 09</div>
-      <div class="sc-title">No-Code Development</div>
-      <div class="sc-desc">Build functional web apps and complex database integrations without writing a single line of code.</div>
-      <div class="sc-preview"><span class="sp-dot">Bubble.io</span><span class="sp-dot">Airtable</span></div>
-      <div class="sc-decor">NOCODE</div>
+      <div class="sc-title">App Development & AI Coding</div>
+      <div class="sc-desc">Master the art of building full-stack applications and mobile bundles using AI-powered development workflows.</div>
+      <div class="sc-preview"><span class="sp-dot">Node.js</span><span class="sp-dot">AI Coding</span><span class="sp-dot">Deployment</span></div>
+      <div class="sc-img"><img src="images/module-09.png" alt="App Development" loading="lazy"></div>
+      <div class="sc-decor">DEV</div>
       <div class="sc-topics">
-        <div class="st-tag">No-Code Ecosystem</div>
-        <div class="st-tag">App Building Basics</div>
-        <div class="st-tag">Database Management</div>
-        <div class="st-tag">Cloud Deployment</div>
+        <div class="st-tag">Development Fundamentals & Environment Building</div>
+        <div class="st-tag">Frontend Designing with AI</div>
+        <div class="st-tag">App Development with antigravity/claude/cursor</div>
+        <div class="st-tag">Saas Webpage, node.js & Html site building</div>
+        <div class="st-tag">Website Animations</div>
+        <div class="st-tag">Database & Backend Management</div>
+        <div class="st-tag">Bug fixing & Error Handling</div>
+        <div class="st-tag">Building APKs & Bundles</div>
+        <div class="st-tag">Deploy Packages - Github & vercel</div>
       </div>
     </div>
 
@@ -428,6 +680,7 @@ footer{background:var(--lime);padding:120px 80px 60px;position:relative;overflow
 
 <!-- ═══════ FAQ ═══════ -->
 <section class="faq">
+  <canvas id="faqCanvas"></canvas>
   <div class="faq-head rv"><h2 class="faq-h">F.<span>A</span>.Qs</h2></div>
   <div class="faq-wrap">
     <div class="faq-item rv"><div class="faq-q"><h4>Who is this course for?</h4><div class="faq-icon">+</div></div><div class="faq-ans">Ideal for entrepreneurs, career changers, and aspiring marketers looking for hands-on, practical business training.</div></div>
@@ -440,12 +693,88 @@ footer{background:var(--lime);padding:120px 80px 60px;position:relative;overflow
 </section>
 
 <!-- ═══════ FOOTER ═══════ -->
-<footer id="enroll">
-  <div class="ft-join rv">LET'S<br>SCALE.</div>
-  <div class="ft-links rv">
-    <a href="tel:+919083596000" class="ft-link">📞 &nbsp;+91 90835-96000</a>
-    <a href="https://braandschool.com" class="ft-link">🌐 &nbsp;braandschool.com</a>
+<footer id="enroll" class="footer rv">
+  <!-- Ticker Background -->
+  <div class="ft-ticker-bg">BRAAND SCHOOL — SCALE YOUR BUSINESS — BRAAND SCHOOL — SCALE YOUR BUSINESS — BRAAND SCHOOL — SCALE YOUR BUSINESS — </div>
+  <!-- Flickering Grid Background -->
+  <canvas id="flickerCanvas"></canvas>
+  <!-- Lighting Effect -->
+  <div class="ft-lens" id="ftLens"></div>
+
+  <div class="ft-main-grid">
+    <div class="ft-left">
+      <div class="ft-join">
+        <span style="--i:1">L</span><span style="--i:2">E</span><span style="--i:3">T</span><span style="--i:4">'</span><span style="--i:5">S</span>
+        <br>
+        <span style="--i:6">S</span><span style="--i:7">C</span><span style="--i:8">A</span><span style="--i:9">L</span><span style="--i:10">E</span><span style="--i:11">.</span>
+      </div>
+
+      <div class="ft-links">
+        <a href="tel:+919083596000" class="ft-link magnetic">
+          <div class="m-inner">
+            <span class="m-label">Direct Line</span>
+            <span class="m-data">+91 90835-96000</span>
+          </div>
+        </a>
+        <a href="https://braandschool.com" class="ft-link magnetic">
+          <div class="m-inner">
+            <span class="m-label">Official Site</span>
+            <span class="m-data">braandschool.com</span>
+          </div>
+        </a>
+      </div>
+    </div>
+
+    <div class="ft-right">
+      <svg class="orbit-path" viewBox="0 0 400 400">
+        <circle cx="200" cy="200" r="170" />
+        <circle cx="200" cy="200" r="110" />
+        <circle cx="200" cy="200" r="50" />
+      </svg>
+      <!-- OUTER RING (r=170, 5 icons) - Slowest -->
+      <div class="orbit-icon" style="--duration:31s; --radius:170; --angle:0; --size:64px">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 19l7-7 3 3-7 7-3-3z"/><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/><path d="M2 2l7.5 1.5"/></svg>
+      </div>
+      <div class="orbit-icon" style="--duration:31s; --radius:170; --angle:72; --size:48px">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18"/><path d="M18 17l-5-5-3 3-4-4"/></svg>
+      </div>
+      <div class="orbit-icon" style="--duration:31s; --radius:170; --angle:144; --size:72px">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+      </div>
+      <div class="orbit-icon" style="--duration:31s; --radius:170; --angle:216; --size:44px">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+      </div>
+      <div class="orbit-icon" style="--duration:31s; --radius:170; --angle:288; --size:56px">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+      </div>
+
+      <!-- MIDDLE RING (r=110, 4 icons) - Medium -->
+      <div class="orbit-icon" style="--duration:19s; --radius:110; --angle:45; --size:38px">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+      </div>
+      <div class="orbit-icon" style="--duration:19s; --radius:110; --angle:135; --size:52px">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+      </div>
+      <div class="orbit-icon" style="--duration:19s; --radius:110; --angle:225; --size:42px">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+      </div>
+      <div class="orbit-icon" style="--duration:19s; --radius:110; --angle:315; --size:46px">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      </div>
+
+      <!-- INNER RING (r=50, 3 icons) - Fastest -->
+      <div class="orbit-icon" style="--duration:13s; --radius:50; --angle:0; --size:32px">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+      </div>
+      <div class="orbit-icon" style="--duration:13s; --radius:50; --angle:120; --size:40px">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+      </div>
+      <div class="orbit-icon" style="--duration:13s; --radius:50; --angle:240; --size:35px">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+      </div>
+    </div>
   </div>
+
   <div class="ft-bottom">
     <span>2nd Floor, Pradhan Building, Rishi Aurobindo Rd, Hakim Para, Siliguri</span>
     <span>© 2025 BraandSchool. All rights reserved.</span>
@@ -531,6 +860,228 @@ setTimeout(curTypeLoop, 3000);
 window.addEventListener('scroll', () => {
   document.querySelector('nav').style.boxShadow = scrollY > 20 ? '0 4px 24px rgba(0,0,0,.08)' : 'none';
 });
+
+// ── LIQUID MESH HERO (CANVAS)
+class LiquidMesh {
+  constructor(canvas) {
+    this.canvas = canvas; this.ctx = canvas.getContext('2d'); this.points = [];
+    this.w = 0; this.h = 0; this.tick = 0;
+    this.mouse = { x: -1000, y: -1000, active: false };
+    this.init(); this.animate();
+    globalThis.addEventListener('mousemove', e => { this.mouse.x = e.clientX; this.mouse.y = e.clientY; this.mouse.active = true; });
+    globalThis.addEventListener('resize', () => this.resize());
+  }
+  init() {
+    this.resize();
+    const spacing = 45;
+    for(let y = -spacing; y < this.h + spacing; y += spacing) {
+      for(let x = -spacing; x < this.w + spacing; x += spacing) {
+        this.points.push({ x, y, ox: x, oy: y, vx: 0, vy: 0 });
+      }
+    }
+  }
+  resize() {
+    this.w = this.canvas.width = globalThis.innerWidth;
+    this.h = this.canvas.height = globalThis.innerHeight;
+  }
+  animate() {
+    this.tick += 0.005;
+    this.ctx.clearRect(0, 0, this.w, this.h);
+    const mDist = 180;
+    this.ctx.strokeStyle = 'rgba(200, 255, 0, 0.12)';
+    this.ctx.lineWidth = 0.5;
+
+    this.points.forEach(p => {
+      // Noise flow
+      const nX = (Math.sin(this.tick + (p.ox * 0.01)) * 12);
+      const nY = (Math.cos(this.tick + (p.oy * 0.01)) * 12);
+      p.x = p.ox + nX; p.y = p.oy + nY;
+
+      // Mouse displacement
+      if(this.mouse.active) {
+        const dx = this.mouse.x - p.x; const dy = this.mouse.y - p.y;
+        const d = Math.hypot(dx, dy);
+        if(d < mDist) {
+          const f = (1 - d/mDist) * 45;
+          p.x -= (dx/d) * f; p.y -= (dy/d) * f;
+        }
+      }
+    });
+
+    // Draw mesh
+    this.ctx.beginPath();
+    const spacing = 45;
+    const cols = Math.ceil(this.w / spacing) + 2;
+    for(let i = 0; i < this.points.length; i++) {
+      const p = this.points[i];
+      // Connect Right
+      if((i+1) % cols !== 0 && i+1 < this.points.length) {
+        this.ctx.moveTo(p.x, p.y); this.ctx.lineTo(this.points[i+1].x, this.points[i+1].y);
+      }
+      // Connect Down
+      if(i + cols < this.points.length) {
+        this.ctx.moveTo(p.x, p.y); this.ctx.lineTo(this.points[i+cols].x, this.points[i+cols].y);
+      }
+    }
+    this.ctx.stroke();
+
+    // Subtle glow at mouse
+    if(this.mouse.active) {
+      const g = this.ctx.createRadialGradient(this.mouse.x, this.mouse.y, 0, this.mouse.x, this.mouse.y, 250);
+      g.addColorStop(0, 'rgba(200, 255, 0, 0.04)');
+      g.addColorStop(1, 'transparent');
+      this.ctx.fillStyle = g; this.ctx.fillRect(0,0,this.w,this.h);
+    }
+    requestAnimationFrame(() => this.animate());
+  }
+}
+new LiquidMesh(document.getElementById('heroCanvas'));
+
+// ── FLICKERING GRID (FOOTER)
+class FlickeringGrid {
+  constructor(el, options = {}) {
+    this.canvas = el;
+    this.ctx = this.canvas.getContext('2d');
+    this.squareSize = options.squareSize || 4;
+    this.gridGap = options.gridGap || 6;
+    this.flickerChance = options.flickerChance || 0.3;
+    this.maxOpacity = options.maxOpacity || 0.3;
+    this.color = options.color || "rgb(0,0,0)";
+    
+    this.isInView = false;
+    this.squares = null;
+    this.cols = 0;
+    this.rows = 0;
+    this.lastTime = 0;
+    
+    this.memoizedColor = this.getRGBA(this.color);
+    this.init();
+  }
+
+  getRGBA(color) {
+    const canvas = document.createElement("canvas");
+    canvas.width = canvas.height = 1;
+    const ctx = canvas.getContext("2d");
+    ctx.fillStyle = color;
+    ctx.fillRect(0, 0, 1, 1);
+    const [r, g, b] = Array.from(ctx.getImageData(0, 0, 1, 1).data);
+    return `rgba(${r}, ${g}, ${b},`;
+  }
+
+  init() {
+    this.resize();
+    
+    const obs = new IntersectionObserver(([entry]) => {
+      this.isInView = entry.isIntersecting;
+      if (this.isInView) {
+        this.lastTime = performance.now();
+        requestAnimationFrame((t) => this.animate(t));
+      }
+    }, { threshold: 0 });
+    obs.observe(this.canvas);
+
+    const res = new ResizeObserver(() => this.resize());
+    res.observe(this.canvas.parentElement);
+  }
+
+  resize() {
+    const dpr = window.devicePixelRatio || 1;
+    const rect = this.canvas.parentElement.getBoundingClientRect();
+    this.width = rect.width;
+    this.height = rect.height;
+    
+    this.canvas.width = this.width * dpr;
+    this.canvas.height = this.height * dpr;
+    this.canvas.style.width = `${this.width}px`;
+    this.canvas.style.height = `${this.height}px`;
+    
+    this.cols = Math.ceil(this.width / (this.squareSize + this.gridGap));
+    this.rows = Math.ceil(this.height / (this.squareSize + this.gridGap));
+    this.squares = new Float32Array(this.cols * this.rows);
+    for (let i = 0; i < this.squares.length; i++) {
+      this.squares[i] = Math.random() * this.maxOpacity;
+    }
+    this.dpr = dpr;
+  }
+
+  animate(time) {
+    if (!this.isInView) return;
+    const deltaTime = (time - this.lastTime) / 1000;
+    this.lastTime = time;
+
+    // Update
+    for (let i = 0; i < this.squares.length; i++) {
+      if (Math.random() < this.flickerChance * deltaTime) {
+        this.squares[i] = Math.random() * this.maxOpacity;
+      }
+    }
+
+    // Draw
+    this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+    const step = this.squareSize + this.gridGap;
+    
+    for (let i = 0; i < this.cols; i++) {
+      for (let j = 0; j < this.rows; j++) {
+        const opacity = this.squares[i * this.rows + j];
+        this.ctx.fillStyle = `${this.memoizedColor}${opacity})`;
+        this.ctx.fillRect(
+          i * step * this.dpr,
+          j * step * this.dpr,
+          this.squareSize * this.dpr,
+          this.squareSize * this.dpr
+        );
+      }
+    }
+    
+    requestAnimationFrame((t) => this.animate(t));
+  }
+}
+
+new FlickeringGrid(document.getElementById('flickerCanvas'), {
+  squareSize: 4,
+  gridGap: 6,
+  flickerChance: 0.15,
+  maxOpacity: 0.25,
+  color: "rgb(0,0,0)"
+});
+
+new FlickeringGrid(document.getElementById('faqCanvas'), {
+  squareSize: 4,
+  gridGap: 6,
+  flickerChance: 0.1,
+  maxOpacity: 0.15,
+  color: "rgb(255,255,255)"
+});
+
+// ── FOOTER INTERACTION
+const ftr = document.querySelector('.footer');
+const fLens = document.getElementById('ftLens');
+if(ftr && fLens){
+  ftr.addEventListener('mousemove', e => {
+    const rect = ftr.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    fLens.style.transform = `translate(${x}px, ${y}px)`;
+  });
+}
+
+// MAGNETIC EFFECT
+document.querySelectorAll('.magnetic').forEach(el => {
+  el.addEventListener('mousemove', e => {
+    const rect = el.getBoundingClientRect();
+    const x = e.clientX - rect.left - rect.width / 2;
+    const y = e.clientY - rect.top - rect.height / 2;
+    el.style.transform = `translate(${x * 0.45}px, ${y * 0.45}px)`;
+    if(el.querySelector('.m-inner')) {
+      el.querySelector('.m-inner').style.transform = `translate(${x * 0.2}px, ${y * 0.2}px)`;
+    }
+  });
+  el.addEventListener('mouseleave', () => {
+    el.style.transform = 'translate(0, 0)';
+    if(el.querySelector('.m-inner')) el.querySelector('.m-inner').style.transform = 'translate(0, 0)';
+  });
+});
+
 </script>
 </body>
 </html>
