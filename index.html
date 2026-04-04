@@ -13,7 +13,7 @@
   <style>
     :root {
       --lime: #C8FF00;
-      --black: #0A0A0A;
+      --black: #000000;
       --cream: #F8F7F3;
       --white: #FFFFFF;
       --mid: #888;
@@ -933,7 +933,7 @@
 
     /* Specialization */
     .stack-card.spec-card {
-      background: var(--black);
+      background: #000;
       border-color: rgba(200, 255, 0, .2)
     }
 
@@ -980,7 +980,7 @@
       z-index: 0;
       background: conic-gradient(from var(--glow-angle, 0deg), transparent 0%, var(--lime) 10%, transparent 20%, rgba(200, 255, 0, .3) 40%, transparent 60%, var(--lime) 80%, transparent 100%);
       animation: glowSpin 4s linear infinite;
-      opacity: .7;
+      opacity: 1;
     }
 
     .spec-glow::after {
@@ -988,7 +988,7 @@
       position: absolute;
       inset: 2px;
       border-radius: 24px;
-      background: var(--black);
+      background: #000;
     }
 
     @property --glow-angle {
@@ -1655,136 +1655,117 @@
         padding: 120px 20px 60px
       }
 
-      .hero-t {
-        font-size: clamp(48px, 12vw, 80px);
-        margin-bottom: 20px
-      }
-
-      .cur-head {
-        padding: 80px 20px 40px
-      }
-
-      .cur-h1 {
-        font-size: 48px
-      }
-
       .stack-container {
-        padding: 0 16px 80px
+        padding: 0 16px 80px;
+        perspective: 2000px; /* Increased for smoother 3D */
+        width: 100%;
       }
 
       .stack-card {
         position: sticky;
         top: 80px;
-        padding: 40px 24px;
-        min-height: auto;
+        width: 100% !important;
+        height: 540px;
         margin-bottom: 48px;
+        background: transparent !important;
+        border: none !important;
+        box-shadow: none !important;
+        z-index: 10;
+        cursor: pointer;
+        display: block !important; /* Force block to occupy full width */
+      }
+
+      /* 3D Container */
+      .sc-inner {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        transition: transform 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+        transform-style: preserve-3d;
+      }
+
+      .stack-card.is-active .sc-inner {
+        transform: rotateY(180deg);
+      }
+
+      /* Front Face */
+      .sc-front {
+        position: absolute;
+        top: 0; left: 0; width: 100%; height: 100%;
+        background: var(--white);
+        border: 1px solid var(--border);
+        border-radius: 24px;
+        padding: 40px 20px;
         display: flex;
         flex-direction: column;
         align-items: center;
         text-align: center;
-        gap: 16px;
+        gap: 12px;
+        backface-visibility: hidden;
+        -webkit-backface-visibility: hidden;
+        z-index: 2;
+        transform: rotateY(0deg);
       }
 
-      .sc-num {
-        display: none
+      /* When flipped, hide front explicitly */
+      .stack-card.is-active .sc-front {
+        opacity: 0;
+        pointer-events: none;
       }
 
-      .sc-tag {
-        order: 1;
-        margin-bottom: 0;
-        letter-spacing: 0.15em
-      }
-
-      .sc-title {
-        order: 2;
-        font-size: 36px;
-        margin-bottom: 8px;
-        line-height: 1
-      }
-
-      .sc-img {
-        order: 3;
-        display: block;
-        width: 100%;
-        max-width: 320px;
-        margin: 12px 0 24px;
-        aspect-ratio: 1;
-        border-radius: 16px
-      }
-
-      .sc-desc {
-        order: 4;
-        font-size: 16px;
-        line-height: 1.6;
-        margin-bottom: 20px;
-        opacity: 0.7;
-        max-width: 100%
-      }
-
-      .sc-preview {
-        order: 5;
-        display: flex !important;
-        justify-content: center;
-        gap: 8px;
-        margin-bottom: 32px;
-        flex-wrap: wrap
-      }
-
-      .sp-dot {
-        padding: 6px 14px;
-        background: rgba(0, 0, 0, 0.04);
-        color: rgba(0, 0, 0, 0.6)
-      }
-
-      /* Mobile Click-to-Reveal Topics with Scrollbar */
+      /* Back Face (Topics) */
       .sc-topics {
-        order: 6;
+        position: absolute !important;
+        top: 0 !important;
+        left: 0 !important;
+        width: 100% !important;
+        height: 100% !important;
+        background: var(--white) !important;
+        border: 1px solid var(--border) !important;
+        border-radius: 24px !important;
+        padding: 32px 20px !important;
         display: flex !important;
         flex-direction: column !important;
-        position: static !important;
-        opacity: 0 !important;
-        visibility: hidden !important;
-        max-height: 0 !important;
-        overflow-y: auto !important;
-        transition: all 0.5s cubic-bezier(.16, 1, .3, 1) !important;
-        background: transparent !important;
-        padding: 0 !important;
         gap: 8px !important;
         text-align: left !important;
-        width: 100%;
+        transform: rotateY(180deg) !important;
+        backface-visibility: hidden !important;
+        -webkit-backface-visibility: hidden !important;
+        opacity: 0;
+        pointer-events: none;
+        z-index: 1;
+        overflow-y: auto !important;
         scrollbar-width: thin;
         scrollbar-color: var(--lime) transparent;
       }
 
+      /* When flipped, show back explicitly */
       .stack-card.is-active .sc-topics {
-        max-height: 320px !important;
         opacity: 1 !important;
-        visibility: visible !important;
-        margin-top: 20px;
-        border-top: 1px solid var(--border);
-        padding-top: 24px !important;
+        pointer-events: auto !important;
       }
 
-      .sc-topics::-webkit-scrollbar {
-        width: 4px
-      }
+      .sc-num { display: none }
+      .sc-tag { order: 1; margin-bottom: 0; letter-spacing: 0.1em; font-size: 11px; opacity: 0.6; }
+      .sc-title { order: 2; font-size: 26px; margin-bottom: 4px; line-height: 1.1; font-weight: 700; color: var(--black); }
+      .sc-img { order: 3; display: block; width: 100%; max-width: 220px; margin: 12px 0; aspect-ratio: 1; border-radius: 12px; object-fit: contain; }
+      .sc-desc { order: 4; font-size: 14px; line-height: 1.5; margin-bottom: 12px; opacity: 0.7; }
+      .sc-preview { order: 5; display: flex !important; justify-content: center; gap: 4px; flex-wrap: wrap }
+      .sp-dot { padding: 4px 8px; font-size: 10px; background: rgba(0, 0, 0, 0.05); color: var(--black); border-radius: 100px; font-weight: 600; }
+      .sc-decor { display: none; }
 
-      .sc-topics::-webkit-scrollbar-thumb {
-        background: var(--lime);
-        border-radius: 10px
-      }
+      .sc-topics::-webkit-scrollbar { width: 4px }
+      .sc-topics::-webkit-scrollbar-thumb { background: var(--lime); border-radius: 10px }
 
       .st-tag {
-        font-size: 15px;
+        font-size: 14px;
         padding: 10px 0;
+        border-bottom: 1px solid rgba(0,0,0,0.05);
         color: var(--black);
-        font-weight: 600;
-        border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        font-weight: 500;
+        line-height: 1.3;
       }
-
-      .sc-decor {
-        display: none
-      }
+      .st-tag:last-child { border-bottom: none; }
 
       .spec-grid {
         grid-template-columns: 1fr;
@@ -1954,158 +1935,186 @@
     <div class="stack-container">
 
       <div class="stack-card" style="z-index:1">
-        <div class="sc-num">01</div>
-        <div class="sc-tag">Module — 01</div>
-        <div class="sc-title">Marketing & Business Fundamentals</div>
-        <div class="sc-desc">Master the core concepts of marketing strategy, competitor research, and branding from the
-          ground up.</div>
-        <div class="sc-preview"><span class="sp-dot">Strategy</span><span class="sp-dot">Competitor Audit</span><span
-            class="sp-dot">USP</span></div>
-        <div class="sc-img"><img src="images/module-01.png" alt="Marketing Fundamentals" loading="lazy"></div>
-        <div class="sc-decor">STRATEGY</div>
-        <div class="sc-topics">
-          <div class="st-tag">Fundamentals of Marketing</div>
-          <div class="st-tag">Competitor Research</div>
-          <div class="st-tag">AIDA Framework</div>
-          <div class="st-tag">5 Ps of Marketing</div>
-          <div class="st-tag">Local Market Research, Audit & Presentation</div>
-          <div class="st-tag">Finding a Niche & Planning your brand</div>
-          <div class="st-tag">Finalize Brand Name</div>
-          <div class="st-tag">Brand Identity & Brand Voice</div>
+        <div class="sc-inner">
+          <div class="sc-front">
+            <div class="sc-num">01</div>
+            <div class="sc-tag">Module — 01</div>
+            <div class="sc-title">Marketing & Business Fundamentals</div>
+            <div class="sc-desc">Master the core concepts of marketing strategy, competitor research, and branding from the
+              ground up.</div>
+            <div class="sc-preview"><span class="sp-dot">Strategy</span><span class="sp-dot">Competitor Audit</span><span
+                class="sp-dot">USP</span></div>
+            <div class="sc-img"><img src="images/module-01.png" alt="Marketing Fundamentals" loading="lazy"></div>
+            <div class="sc-decor">STRATEGY</div>
+          </div>
+          <div class="sc-topics">
+            <div class="st-tag">Fundamentals of Marketing</div>
+            <div class="st-tag">Competitor Research</div>
+            <div class="st-tag">AIDA Framework</div>
+            <div class="st-tag">5 Ps of Marketing</div>
+            <div class="st-tag">Local Market Research, Audit & Presentation</div>
+            <div class="st-tag">Finding a Niche & Planning your brand</div>
+            <div class="st-tag">Finalize Brand Name</div>
+            <div class="st-tag">Brand Identity & Brand Voice</div>
+          </div>
         </div>
       </div>
 
       <div class="stack-card" style="z-index:2">
-        <div class="sc-num">02</div>
-        <div class="sc-tag">Module — 02</div>
-        <div class="sc-title">Gen AI & Design Tools</div>
-        <div class="sc-desc">Accelerate your workflow with generative AI for content, graphics, and automation.</div>
-        <div class="sc-preview"><span class="sp-dot">AI Tools</span><span class="sp-dot">Visual Design</span></div>
-        <div class="sc-img"><img src="images/module-02.png" alt="Gen AI & Design Tools" loading="lazy"></div>
-        <div class="sc-decor">AI / GD</div>
-        <div class="sc-topics">
-          <div class="st-tag">Fundamentals & History of AI</div>
-          <div class="st-tag">Intro to LLMs</div>
-          <div class="st-tag">Prompt Engineering Basics</div>
-          <div class="st-tag">Generative Text: Setting up Tone, Writing Styles</div>
-          <div class="st-tag">Generative Image: InPainting, Outpainting</div>
-          <div class="st-tag">Generative Video: Text to Video, Image to Video</div>
-          <div class="st-tag">Generative Audio: Sound Effects & Music</div>
-          <div class="st-tag">Gen in Content Creation</div>
-          <div class="st-tag">Canva & Adobe Firefly</div>
-          <div class="st-tag">AI Agents to Automate Tasks</div>
+        <div class="sc-inner">
+          <div class="sc-front">
+            <div class="sc-num">02</div>
+            <div class="sc-tag">Module — 02</div>
+            <div class="sc-title">Gen AI & Design Tools</div>
+            <div class="sc-desc">Accelerate your workflow with generative AI for content, graphics, and automation.</div>
+            <div class="sc-preview"><span class="sp-dot">AI Tools</span><span class="sp-dot">Visual Design</span></div>
+            <div class="sc-img"><img src="images/module-02.png" alt="Gen AI & Design Tools" loading="lazy"></div>
+            <div class="sc-decor">AI / GD</div>
+          </div>
+          <div class="sc-topics">
+            <div class="st-tag">Fundamentals & History of AI</div>
+            <div class="st-tag">Intro to LLMs</div>
+            <div class="st-tag">Prompt Engineering Basics</div>
+            <div class="st-tag">Generative Text: Setting up Tone, Writing Styles</div>
+            <div class="st-tag">Generative Image: InPainting, Outpainting</div>
+            <div class="st-tag">Generative Video: Text to Video, Image to Video</div>
+            <div class="st-tag">Generative Audio: Sound Effects & Music</div>
+            <div class="st-tag">Gen in Content Creation</div>
+            <div class="st-tag">Canva & Adobe Firefly</div>
+            <div class="st-tag">AI Agents to Automate Tasks</div>
+          </div>
         </div>
       </div>
 
       <div class="stack-card" style="z-index:3">
-        <div class="sc-num">03</div>
-        <div class="sc-tag">Module — 03</div>
-        <div class="sc-title">Social Media Management</div>
-        <div class="sc-desc">Learn algorithm-aware content planning and paid campaign management across the Meta suite.
-        </div>
-        <div class="sc-preview"><span class="sp-dot">Meta Ads</span><span class="sp-dot">Content Plan</span></div>
-        <div class="sc-img"><img src="images/module-03.png" alt="Social Media Management" loading="lazy"></div>
-        <div class="sc-decor">SOCIAL</div>
-        <div class="sc-topics">
-          <div class="st-tag">Understanding Social Media Algorithms</div>
-          <div class="st-tag">Setting up Social Media accounts</div>
-          <div class="st-tag">Meta Business Suite Setup(Facebook & Instagram)</div>
-          <div class="st-tag">Managing Multiple Social Media Platforms (Pinterest, X, Linkedin)</div>
-          <div class="st-tag">Content Planner</div>
-          <div class="st-tag">Copywriting</div>
-          <div class="st-tag">Social Media Automations</div>
-          <div class="st-tag">Ads Manager Setup</div>
-          <div class="st-tag">Campaign Setup: Awareness, Leads, Engagement, Sales.</div>
+        <div class="sc-inner">
+          <div class="sc-front">
+            <div class="sc-num">03</div>
+            <div class="sc-tag">Module — 03</div>
+            <div class="sc-title">Social Media Management</div>
+            <div class="sc-desc">Learn algorithm-aware content planning and paid campaign management across the Meta suite.
+            </div>
+            <div class="sc-preview"><span class="sp-dot">Meta Ads</span><span class="sp-dot">Content Plan</span></div>
+            <div class="sc-img"><img src="images/module-03.png" alt="Social Media Management" loading="lazy"></div>
+            <div class="sc-decor">SOCIAL</div>
+          </div>
+          <div class="sc-topics">
+            <div class="st-tag">Understanding Social Media Algorithms</div>
+            <div class="st-tag">Setting up Social Media accounts</div>
+            <div class="st-tag">Meta Business Suite Setup(Facebook & Instagram)</div>
+            <div class="st-tag">Managing Multiple Social Media Platforms (Pinterest, X, Linkedin)</div>
+            <div class="st-tag">Content Planner</div>
+            <div class="st-tag">Copywriting</div>
+            <div class="st-tag">Social Media Automations</div>
+            <div class="st-tag">Ads Manager Setup</div>
+            <div class="st-tag">Campaign Setup: Awareness, Leads, Engagement, Sales.</div>
+          </div>
         </div>
       </div>
 
       <div class="stack-card" style="z-index:4">
-        <div class="sc-num">04</div>
-        <div class="sc-tag">Module — 04</div>
-        <div class="sc-title">Website Development</div>
-        <div class="sc-desc">Build high-converting static websites and master the principles of performance and UX.
-        </div>
-        <div class="sc-preview"><span class="sp-dot">WordPress</span><span class="sp-dot">Landing Pages</span><span
-            class="sp-dot">Elementor</span></div>
-        <div class="sc-img"><img src="images/module-04.png" alt="Website Development" loading="lazy"></div>
-        <div class="sc-decor">WEBDEV</div>
-        <div class="sc-topics">
-          <div class="st-tag">Basics of HTML, CSS & JavaScript</div>
-          <div class="st-tag">Static Website creation</div>
-          <div class="st-tag">Intro to Domain & Hosting</div>
-          <div class="st-tag">Intro to wordpress websites</div>
-          <div class="st-tag">Elementor website builder</div>
-          <div class="st-tag">Usage of plugins</div>
-          <div class="st-tag">Speed & Security optimizations</div>
-          <div class="st-tag">Build your own website</div>
+        <div class="sc-inner">
+          <div class="sc-front">
+            <div class="sc-num">04</div>
+            <div class="sc-tag">Module — 04</div>
+            <div class="sc-title">Website Development</div>
+            <div class="sc-desc">Build high-converting static websites and master the principles of performance and UX.
+            </div>
+            <div class="sc-preview"><span class="sp-dot">WordPress</span><span class="sp-dot">Landing Pages</span><span
+                class="sp-dot">Elementor</span></div>
+            <div class="sc-img"><img src="images/module-04.png" alt="Website Development" loading="lazy"></div>
+            <div class="sc-decor">WEBDEV</div>
+          </div>
+          <div class="sc-topics">
+            <div class="st-tag">Basics of HTML, CSS & JavaScript</div>
+            <div class="st-tag">Static Website creation</div>
+            <div class="st-tag">Intro to Domain & Hosting</div>
+            <div class="st-tag">Intro to wordpress websites</div>
+            <div class="st-tag">Elementor website builder</div>
+            <div class="st-tag">Usage of plugins</div>
+            <div class="st-tag">Speed & Security optimizations</div>
+            <div class="st-tag">Build your own website</div>
+          </div>
         </div>
       </div>
 
       <div class="stack-card" style="z-index:5">
-        <div class="sc-num">05</div>
-        <div class="sc-tag">Module — 05</div>
-        <div class="sc-title">SEO & Performance Marketing</div>
-        <div class="sc-desc">Rank higher on search engines and optimize your conversion rates using professional
-          toolkits.</div>
-        <div class="sc-preview"><span class="sp-dot">SEMRush</span><span class="sp-dot">Keywords</span><span
-            class="sp-dot">Indexing</span></div>
-        <div class="sc-img"><img src="images/module-05.png" alt="SEO & Performance Marketing" loading="lazy"></div>
-        <div class="sc-decor">SEO</div>
-        <div class="sc-topics">
-          <div class="st-tag">Keyword Research & Search Intent</div>
-          <div class="st-tag">Content Writing, Blogging & Adsense</div>
-          <div class="st-tag">On-Page SEO — Meta Tags, Schema & Image Optimisation</div>
-          <div class="st-tag">Technical SEO — Robots.txt, Sitemap & Site Health</div>
-          <div class="st-tag">SEO Audit & Performance Review</div>
-          <div class="st-tag">Link Building Strategies</div>
-          <div class="st-tag">Google My Business & Local SEO</div>
-          <div class="st-tag">UTM Parameters & Conversion Tracking</div>
-          <div class="st-tag">Google Analytics, Search Console & Tag Manager</div>
-          <div class="st-tag">Heatmaps & User Behaviour Analysis</div>
+        <div class="sc-inner">
+          <div class="sc-front">
+            <div class="sc-num">05</div>
+            <div class="sc-tag">Module — 05</div>
+            <div class="sc-title">SEO & Performance Marketing</div>
+            <div class="sc-desc">Rank higher on search engines and optimize your conversion rates using professional
+              toolkits.</div>
+            <div class="sc-preview"><span class="sp-dot">SEMRush</span><span class="sp-dot">Keywords</span><span
+                class="sp-dot">Indexing</span></div>
+            <div class="sc-img"><img src="images/module-05.png" alt="SEO & Performance Marketing" loading="lazy"></div>
+            <div class="sc-decor">SEO</div>
+          </div>
+          <div class="sc-topics">
+            <div class="st-tag">Keyword Research & Search Intent</div>
+            <div class="st-tag">Content Writing, Blogging & Adsense</div>
+            <div class="st-tag">On-Page SEO — Meta Tags, Schema & Image Optimisation</div>
+            <div class="st-tag">Technical SEO — Robots.txt, Sitemap & Site Health</div>
+            <div class="st-tag">SEO Audit & Performance Review</div>
+            <div class="st-tag">Link Building Strategies</div>
+            <div class="st-tag">Google My Business & Local SEO</div>
+            <div class="st-tag">UTM Parameters & Conversion Tracking</div>
+            <div class="st-tag">Google Analytics, Search Console & Tag Manager</div>
+            <div class="st-tag">Heatmaps & User Behaviour Analysis</div>
+          </div>
         </div>
       </div>
 
       <div class="stack-card" style="z-index:6">
-        <div class="sc-num">06</div>
-        <div class="sc-tag">Module — 06</div>
-        <div class="sc-title">Google Ads (PPC)</div>
-        <div class="sc-desc">Drive targeted traffic and dominate search result pages with high-intent PPC campaigns.
-        </div>
-        <div class="sc-preview"><span class="sp-dot">Search PPC</span><span class="sp-dot">Display Ads</span></div>
-        <div class="sc-img"><img src="images/module-06.png" alt="Google Ads PPC" loading="lazy"></div>
-        <div class="sc-decor">GOOGLE</div>
-        <div class="sc-topics">
-          <div class="st-tag">Setting Up & Navigating Your Google Ads Account</div>
-          <div class="st-tag">Keyword Research & Google Keyword Planner</div>
-          <div class="st-tag">Landing Page Setup & Optimisation</div>
-          <div class="st-tag">PPC Campaign Setup : Match types Bidding</div>
-          <div class="st-tag">Display Ads Setup & Audience Targeting</div>
-          <div class="st-tag">Youtube/Video ads setup</div>
-          <div class="st-tag">Google Merchant Centre & Shopping Ads</div>
-          <div class="st-tag">Remarketing Campaigns & Audience Lists</div>
-          <div class="st-tag">Conversion Rate Optimization</div>
-          <div class="st-tag">Conversion Tracking & Performance Analysis</div>
+        <div class="sc-inner">
+          <div class="sc-front">
+            <div class="sc-num">06</div>
+            <div class="sc-tag">Module — 06</div>
+            <div class="sc-title">Google Ads (PPC)</div>
+            <div class="sc-desc">Drive targeted traffic and dominate search result pages with high-intent PPC campaigns.
+            </div>
+            <div class="sc-preview"><span class="sp-dot">Search PPC</span><span class="sp-dot">Display Ads</span></div>
+            <div class="sc-img"><img src="images/module-06.png" alt="Google Ads PPC" loading="lazy"></div>
+            <div class="sc-decor">GOOGLE</div>
+          </div>
+          <div class="sc-topics">
+            <div class="st-tag">Setting Up & Navigating Your Google Ads Account</div>
+            <div class="st-tag">Keyword Research & Google Keyword Planner</div>
+            <div class="st-tag">Landing Page Setup & Optimisation</div>
+            <div class="st-tag">PPC Campaign Setup : Match types Bidding</div>
+            <div class="st-tag">Display Ads Setup & Audience Targeting</div>
+            <div class="st-tag">Youtube/Video ads setup</div>
+            <div class="st-tag">Google Merchant Centre & Shopping Ads</div>
+            <div class="st-tag">Remarketing Campaigns & Audience Lists</div>
+            <div class="st-tag">Conversion Rate Optimization</div>
+            <div class="st-tag">Conversion Tracking & Performance Analysis</div>
+          </div>
         </div>
       </div>
 
       <div class="stack-card" style="z-index:7">
-        <div class="sc-num">07</div>
-        <div class="sc-tag">Module — 07</div>
-        <div class="sc-title">CRM & Automations</div>
-        <div class="sc-desc">Connect every part of your marketing funnel with automated workflows and lead nurturing
-          triggers.</div>
-        <div class="sc-preview"><span class="sp-dot">Zapier</span><span class="sp-dot">Email Flows</span><span
-            class="sp-dot">CRM</span></div>
-        <div class="sc-img"><img src="images/module-07.png" alt="CRM & Automations" loading="lazy"></div>
-        <div class="sc-decor">AUTO</div>
-        <div class="sc-topics">
-          <div class="st-tag">Planning & Managing Performance Marketing Campaigns</div>
-          <div class="st-tag">Setting up CRM & Automation Platforms</div>
-          <div class="st-tag">Lead Nurturing & Management</div>
-          <div class="st-tag">Lead Integration with Google Sheets & CRM</div>
-          <div class="st-tag">Drip Campaigns & Email Marketing Automation</div>
-          <div class="st-tag">Social Media & Chatbot Automations</div>
-          <div class="st-tag">Building a Full Automated Marketing Funnel</div>
+        <div class="sc-inner">
+          <div class="sc-front">
+            <div class="sc-num">07</div>
+            <div class="sc-tag">Module — 07</div>
+            <div class="sc-title">CRM & Automations</div>
+            <div class="sc-desc">Connect every part of your marketing funnel with automated workflows and lead nurturing
+              triggers.</div>
+            <div class="sc-preview"><span class="sp-dot">Zapier</span><span class="sp-dot">Email Flows</span><span
+                class="sp-dot">CRM</span></div>
+            <div class="sc-img"><img src="images/module-07.png" alt="CRM & Automations" loading="lazy"></div>
+            <div class="sc-decor">AUTO</div>
+          </div>
+          <div class="sc-topics">
+            <div class="st-tag">Planning & Managing Performance Marketing Campaigns</div>
+            <div class="st-tag">Setting up CRM & Automation Platforms</div>
+            <div class="st-tag">Lead Nurturing & Management</div>
+            <div class="st-tag">Lead Integration with Google Sheets & CRM</div>
+            <div class="st-tag">Drip Campaigns & Email Marketing Automation</div>
+            <div class="st-tag">Social Media & Chatbot Automations</div>
+            <div class="st-tag">Building a Full Automated Marketing Funnel</div>
+          </div>
         </div>
       </div>
 
@@ -2127,46 +2136,54 @@
       </div>
 
       <div class="stack-card" style="z-index:9">
-        <div class="sc-num">08</div>
-        <div class="sc-tag">Module — 08</div>
-        <div class="sc-title">Ecommerce Management</div>
-        <div class="sc-desc">Setup and scale your online store with professional logistics, catalogues, and analytics.
-        </div>
-        <div class="sc-preview"><span class="sp-dot">Shopify</span><span class="sp-dot">Dropshipping</span></div>
-        <div class="sc-img"><img src="images/module-08.png" alt="Ecommerce Management" loading="lazy"></div>
-        <div class="sc-decor">ECOM</div>
-        <div class="sc-topics">
-          <div class="st-tag">Business Documentation & Registrations</div>
-          <div class="st-tag">Woo-Commerce Website Setup</div>
-          <div class="st-tag">Shopify Website Setup</div>
-          <div class="st-tag">Shipping & Delivery Management</div>
-          <div class="st-tag">Payment Gateway Setup</div>
-          <div class="st-tag">Amazon Seller Central: Setup, Listing & SEO</div>
-          <div class="st-tag">Google Merchant Centre Setup</div>
-          <div class="st-tag">Meta Commerce Manager</div>
+        <div class="sc-inner">
+          <div class="sc-front">
+            <div class="sc-num">08</div>
+            <div class="sc-tag">Module — 08</div>
+            <div class="sc-title">Ecommerce Management</div>
+            <div class="sc-desc">Setup and scale your online store with professional logistics, catalogues, and analytics.
+            </div>
+            <div class="sc-preview"><span class="sp-dot">Shopify</span><span class="sp-dot">Dropshipping</span></div>
+            <div class="sc-img"><img src="images/module-08.png" alt="Ecommerce Management" loading="lazy"></div>
+            <div class="sc-decor">ECOM</div>
+          </div>
+          <div class="sc-topics">
+            <div class="st-tag">Business Documentation & Registrations</div>
+            <div class="st-tag">Woo-Commerce Website Setup</div>
+            <div class="st-tag">Shopify Website Setup</div>
+            <div class="st-tag">Shipping & Delivery Management</div>
+            <div class="st-tag">Payment Gateway Setup</div>
+            <div class="st-tag">Amazon Seller Central: Setup, Listing & SEO</div>
+            <div class="st-tag">Google Merchant Centre Setup</div>
+            <div class="st-tag">Meta Commerce Manager</div>
+          </div>
         </div>
       </div>
 
       <div class="stack-card" style="z-index:10">
-        <div class="sc-num">09</div>
-        <div class="sc-tag">Module — 09</div>
-        <div class="sc-title">App Development & AI Coding</div>
-        <div class="sc-desc">Master the art of building full-stack applications and mobile bundles using AI-powered
-          development workflows.</div>
-        <div class="sc-preview"><span class="sp-dot">Node.js</span><span class="sp-dot">AI Coding</span><span
-            class="sp-dot">Deployment</span></div>
-        <div class="sc-img"><img src="images/module-09.png" alt="App Development" loading="lazy"></div>
-        <div class="sc-decor">DEV</div>
-        <div class="sc-topics">
-          <div class="st-tag">Development Fundamentals & Environment Building</div>
-          <div class="st-tag">Frontend Designing with AI</div>
-          <div class="st-tag">App Development with antigravity/claude/cursor</div>
-          <div class="st-tag">Saas Webpage, node.js & Html site building</div>
-          <div class="st-tag">Website Animations</div>
-          <div class="st-tag">Database & Backend Management</div>
-          <div class="st-tag">Bug fixing & Error Handling</div>
-          <div class="st-tag">Building APKs & Bundles</div>
-          <div class="st-tag">Deploy Packages - Github & vercel</div>
+        <div class="sc-inner">
+          <div class="sc-front">
+            <div class="sc-num">09</div>
+            <div class="sc-tag">Module — 09</div>
+            <div class="sc-title">App Development & AI Coding</div>
+            <div class="sc-desc">Master the art of building full-stack applications and mobile bundles using AI-powered
+              development workflows.</div>
+            <div class="sc-preview"><span class="sp-dot">Node.js</span><span class="sp-dot">AI Coding</span><span
+                class="sp-dot">Deployment</span></div>
+            <div class="sc-img"><img src="images/module-09.png" alt="App Development" loading="lazy"></div>
+            <div class="sc-decor">DEV</div>
+          </div>
+          <div class="sc-topics">
+            <div class="st-tag">Development Fundamentals & Environment Building</div>
+            <div class="st-tag">Frontend Designing with AI</div>
+            <div class="st-tag">App Development with antigravity/claude/cursor</div>
+            <div class="st-tag">Saas Webpage, node.js & Html site building</div>
+            <div class="st-tag">Website Animations</div>
+            <div class="st-tag">Database & Backend Management</div>
+            <div class="st-tag">Bug fixing & Error Handling</div>
+            <div class="st-tag">Building APKs & Bundles</div>
+            <div class="st-tag">Deploy Packages - Github & vercel</div>
+          </div>
         </div>
       </div>
 
