@@ -760,20 +760,38 @@
       position: sticky;
       top: 100px;
       width: 100%;
+      min-height: 520px;
+      cursor: pointer;
+      margin-bottom: 60px;
+      transition: box-shadow .3s;
+      background: transparent !important;
+      border: none !important;
+      box-shadow: none !important;
+      overflow: visible !important;
+    }
+
+    .sc-inner {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      /* Preserve-3d for future flip if needed, but for now we focus on layout */
+    }
+
+    .sc-front {
+      position: relative;
+      width: 100%;
+      height: 100%;
       background: var(--white);
       border: 1px solid var(--border);
       border-radius: 24px;
       padding: 56px 60px;
-      min-height: 520px;
       display: grid;
       grid-template-columns: 1fr 1fr;
       grid-template-rows: auto auto auto 1fr;
       gap: 0 40px;
       box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
-      cursor: pointer;
       overflow: hidden;
-      margin-bottom: 60px;
-      transition: box-shadow .3s;
+      z-index: 2;
     }
 
     .stack-card:hover {
@@ -964,6 +982,7 @@
 
     /* ═══ SPECIALIZATION CARD ═══ */
     .spec-divider {
+      display: grid !important;
       grid-template-columns: 1fr !important;
       justify-items: center;
       text-align: center;
@@ -1656,8 +1675,8 @@
       }
 
       .stack-container {
-        padding: 0 16px 80px;
-        perspective: 2000px; /* Increased for smoother 3D */
+        padding: 0 12px 80px;
+        perspective: 2000px;
         width: 100%;
       }
 
@@ -1665,14 +1684,14 @@
         position: sticky;
         top: 80px;
         width: 100% !important;
-        height: 540px;
+        height: 600px;
         margin-bottom: 48px;
         background: transparent !important;
         border: none !important;
         box-shadow: none !important;
         z-index: 10;
         cursor: pointer;
-        display: block !important; /* Force block to occupy full width */
+        display: block !important;
       }
 
       /* 3D Container */
@@ -1695,12 +1714,12 @@
         background: var(--white);
         border: 1px solid var(--border);
         border-radius: 24px;
-        padding: 40px 20px;
+        padding: 48px 24px;
         display: flex;
         flex-direction: column;
         align-items: center;
         text-align: center;
-        gap: 12px;
+        gap: 16px;
         backface-visibility: hidden;
         -webkit-backface-visibility: hidden;
         z-index: 2;
@@ -1746,12 +1765,12 @@
       }
 
       .sc-num { display: none }
-      .sc-tag { order: 1; margin-bottom: 0; letter-spacing: 0.1em; font-size: 11px; opacity: 0.6; }
-      .sc-title { order: 2; font-size: 26px; margin-bottom: 4px; line-height: 1.1; font-weight: 700; color: var(--black); }
-      .sc-img { order: 3; display: block; width: 100%; max-width: 220px; margin: 12px 0; aspect-ratio: 1; border-radius: 12px; object-fit: contain; }
-      .sc-desc { order: 4; font-size: 14px; line-height: 1.5; margin-bottom: 12px; opacity: 0.7; }
+      .sc-tag { order: 1; margin-bottom: 0; letter-spacing: 0.1em; font-size: 12px; opacity: 0.6; }
+      .sc-title { order: 2; font-size: 30px; margin-bottom: 4px; line-height: 1.1; font-weight: 700; color: var(--black); }
+      .sc-img { order: 3; display: block; width: 100%; max-width: 280px; margin: 12px 0; aspect-ratio: 1; border-radius: 12px; object-fit: contain; }
+      .sc-desc { order: 4; font-size: 16px; line-height: 1.5; margin-bottom: 12px; opacity: 0.7; }
       .sc-preview { order: 5; display: flex !important; justify-content: center; gap: 4px; flex-wrap: wrap }
-      .sp-dot { padding: 4px 8px; font-size: 10px; background: rgba(0, 0, 0, 0.05); color: var(--black); border-radius: 100px; font-weight: 600; }
+      .sp-dot { padding: 5px 12px; font-size: 11px; background: rgba(0, 0, 0, 0.05); color: var(--black); border-radius: 100px; font-weight: 600; }
       .sc-decor { display: none; }
 
       .sc-topics::-webkit-scrollbar { width: 4px }
