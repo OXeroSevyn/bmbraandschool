@@ -155,11 +155,16 @@
     }
 
     /* ─── DURATION STRIP ─────────────────────────────────────── */
-    .dur-strip { background: var(--white); border-bottom: 1px solid var(--border); padding: clamp(14px,2vw,22px) clamp(20px,5vw,80px); display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
-    .dur-lbl { font-family: var(--syne); font-size: 11px; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; }
-    .dur-dot { width: 4px; height: 4px; background: #ccc; border-radius: 50%; }
-    .dur-val { font-size: 14px; color: var(--mid); }
-    .dur-chip { background: var(--black); color: var(--lime); font-family: var(--syne); font-size: 11px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; padding: 5px 16px; border-radius: 100px; }
+    .dur-strip { background: var(--white); border-bottom: 1px solid var(--border); padding: clamp(14px,2vw,22px) clamp(20px,5vw,80px); display: flex; align-items: stretch; gap: 0; flex-wrap: wrap; justify-content: center; }
+    .dur-col { display: flex; flex-direction: column; gap: 10px; padding: clamp(12px,2vw,20px) clamp(16px,3vw,48px); flex: 0 1 auto; align-items: center; text-align: center; }
+
+    .dur-divider { width: 1px; background: var(--border); align-self: stretch; flex-shrink: 0; }
+    .dur-col-label { font-family: var(--syne); font-size: 11px; font-weight: 800; letter-spacing: .14em; text-transform: uppercase; color: var(--black); }
+    .dur-col-label--spec { color: var(--black); }
+    .dur-col-meta { display: flex; align-items: center; justify-content: center; gap: 8px; flex-wrap: wrap; }
+    .dur-tag { font-family: var(--syne); font-size: 11px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; padding: 5px 14px; border-radius: 100px; background: rgba(0,0,0,.05); color: rgba(0,0,0,.5); }
+    .dur-strike { text-decoration: line-through; opacity: .4; }
+    .dur-check { background: var(--black); color: var(--lime); text-decoration: none; opacity: 1; }
 
     /* ─── CURRICULUM ─────────────────────────────────────────── */
     .curriculum { background: var(--cream); padding: 100px 0 0; }
@@ -517,10 +522,23 @@
   </div>
 
   <div class="dur-strip rv">
-    <span class="dur-lbl">Course Duration</span>
-    <span class="dur-dot"></span>
-    <span class="dur-val">5 months &nbsp;·&nbsp; 5 days a week</span>
-    <span class="dur-chip">Batches Running</span>
+    <div class="dur-col">
+      <div class="dur-col-label">Standard Course</div>
+      <div class="dur-col-meta">
+        <span class="dur-tag">5 Months</span>
+        <span class="dur-tag">5 Days/Week</span>
+        <span class="dur-tag dur-strike">Live Internship</span>
+      </div>
+    </div>
+    <div class="dur-divider"></div>
+    <div class="dur-col">
+      <div class="dur-col-label dur-col-label--spec">Specialization Course</div>
+      <div class="dur-col-meta">
+        <span class="dur-tag">7 Months</span>
+        <span class="dur-tag">5 Days/Week</span>
+        <span class="dur-tag dur-check">&#10003; Live Internship</span>
+      </div>
+    </div>
   </div>
 
   <!-- ═══════ CURRICULUM ═══════ -->
@@ -539,7 +557,22 @@
 
     <div class="stack-container">
 
-      <!-- Module 01 -->
+      <!-- STANDARD COURSE INTRO CARD -->
+      <div class="stack-card spec-card" style="z-index:0">
+        <div class="spec-glow"></div>
+        <div class="spec-shimmer"></div>
+        <div class="spec-particles">
+          <span></span><span></span><span></span><span></span>
+          <span></span><span></span><span></span><span></span>
+        </div>
+        <div class="spec-badge">✦ FOUNDATION TRACK</div>
+        <div class="spec-divider-title">Welcome to the</div>
+        <h2 class="spec-divider-highlight">Standard<br>Course</h2>
+        <div class="spec-divider-sub">Begin Here</div>
+        <div class="spec-line"></div>
+      </div>
+
+            <!-- Module 01 -->
       <div class="stack-card" style="z-index:1">
         <div class="sc-inner">
           <div class="sc-front">
